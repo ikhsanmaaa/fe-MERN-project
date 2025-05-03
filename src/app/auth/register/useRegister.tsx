@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IRegister } from "@/types/Auth";
-import authServices from "@/services/auth";
+import authServices from "@/services/auth.services";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { cn } from "@/utils/cn";
@@ -26,7 +26,7 @@ const registerSchema = yup.object().shape({
     .required("Please input your password confirmation"),
 });
 
-export default function FormRegister() {
+function FormRegister() {
   const [visiblePassword, setVisiblePassword] = useState({
     password: false,
     confirmPassword: false,
@@ -39,12 +39,11 @@ export default function FormRegister() {
     });
   };
 
-  const router = useRouter();
-
   const registerService = async (payload: IRegister) => {
     const result = await authServices.register(payload);
     return result;
   };
+  const router = useRouter();
 
   const { mutate: mutateRegister, isPending: isPendingRegister } = useMutation({
     mutationFn: registerService,
@@ -58,7 +57,10 @@ export default function FormRegister() {
       reset();
     },
   });
-  const handleRegister = (data: IRegister) => mutateRegister(data);
+  const handleRegister = (data: IRegister) => {
+    console.log(data);
+    mutateRegister(data);
+  };
 
   const {
     control,
@@ -199,3 +201,19 @@ export default function FormRegister() {
     </form>
   );
 }
+
+function ButtonSuccess() {
+  const router = useRouter();
+  return (
+    <Button
+      className="mt-4 w-fit"
+      variant="bordered"
+      color="danger"
+      onPress={() => router.push("/")}
+    >
+      Back To Home
+    </Button>
+  );
+}
+
+export { ButtonSuccess, FormRegister };

@@ -2,13 +2,13 @@ import { Card, CardBody } from "@heroui/card";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { FormRegister } from "./useRegister";
+import { FormLogin } from "./useLogin";
 
 export const metadata: Metadata = {
-  title: "MERN | Register",
+  title: "MERN | Login",
 };
 
-export default function Register() {
+export default function Login() {
   return (
     <div className="flex w-full flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20">
       <div className="flex w-full lg:w-1/3 flex-col items-center justify-center gap-10">
@@ -29,19 +29,17 @@ export default function Register() {
       <div>
         <Card>
           <CardBody className="p-8">
-            <h2 className="text-2xl font-bold text-danger-500">
-              Create Account
-            </h2>
+            <h2 className="text-2xl font-bold text-danger-500">Login</h2>
             <p className="text-small mb-4 mt-2">
-              Have an account?&nbsp;
+              Don{"'"}t have an account?&nbsp;
               <Link
-                href={"/auth/login"}
+                href={"/auth/register"}
                 className="font-semibold text-danger-400"
               >
-                Login Here
+                Register Here
               </Link>
             </p>
-            <FormRegister />
+            <FormLogin />
           </CardBody>
         </Card>
       </div>
