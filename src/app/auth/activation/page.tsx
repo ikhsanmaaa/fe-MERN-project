@@ -1,14 +1,14 @@
 import authServices from "@/services/auth.services";
 import Activation from "./activ";
-export default async function ActivationPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string };
-}) {
+
+interface PageProps {
+  searchParams: { [key: string]: string | undefined };
+}
+export default async function ActivationPage({ searchParams }: PageProps) {
   let status: "success" | "failed" = "failed";
 
   try {
-    const code = searchParams.code;
+    const code = (await searchParams).code;
     if (code) {
       const result = await authServices.activation({ code });
       if (result.data?.data) {
