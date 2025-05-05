@@ -8,7 +8,7 @@ export default async function ActivationPage({ searchParams }: PageProps) {
   let status: "success" | "failed" = "failed";
 
   try {
-    const code = (await searchParams).code;
+    const code = searchParams.code;
     if (code) {
       const result = await authServices.activation({ code });
       if (result.data?.data) {
