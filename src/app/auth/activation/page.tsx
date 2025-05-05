@@ -2,18 +2,19 @@ import authServices from "@/services/auth.services";
 import Activation from "./activ";
 
 interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
+
 export default async function ActivationPage({ searchParams }: PageProps) {
   let status: "success" | "failed" = "failed";
 
   try {
-    const code =
-      typeof searchParams.code === "string" ? searchParams.code : undefined;
-    if (code) {
-      const result = await authServices.activation({ code });
+    const rawCode = searchParams?.code;
+
+    if (typeof rawCode === "string") {
+      const result = await authServices.activation({ code: rawCode });
+
       if (result.data?.data) {
-        console.log(result);
         status = "success";
       }
     }
@@ -21,5 +22,6 @@ export default async function ActivationPage({ searchParams }: PageProps) {
   } catch (error) {
     status = "failed";
   }
+
   return <Activation status={status} />;
 }
