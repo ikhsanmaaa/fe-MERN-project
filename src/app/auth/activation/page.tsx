@@ -1,24 +1,17 @@
 import authServices from "@/services/auth.services";
 import Activation from "./activ";
-import { NextPage } from "next";
 
-// Secara eksplisit mendapatkan query parameter dari URL
-type ActivationPageProps = {
-  searchParams: { [key: string]: string | undefined };
-};
-
-const ActivationPage: NextPage<ActivationPageProps> = async ({
+export default async function ActivationPages({
   searchParams,
-}) => {
+}: {
+  searchParams: Promise<{ code: string }>;
+}) {
   let status: "success" | "failed" = "failed";
 
+  const { code } = await searchParams;
   try {
-    // Periksa apakah searchParams ada dan ambil code
-    const rawCode = (await searchParams).code;
-
-    if (typeof rawCode === "string") {
-      const result = await authServices.activation({ code: rawCode });
-      console.log("Activation result:", result.data); // Debugging untuk melihat hasilnya
+    if (typeof code === "string") {
+      const result = await authServices.activation({ code });
       if (result.data?.data) {
         status = "success";
       }
@@ -29,6 +22,4 @@ const ActivationPage: NextPage<ActivationPageProps> = async ({
   }
 
   return <Activation status={status} />;
-};
-
-export default ActivationPage;
+}
