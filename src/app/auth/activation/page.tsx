@@ -1,11 +1,13 @@
 import authServices from "@/services/auth.services";
 import Activation from "./activ";
 
-interface PageProps {
+type ActivationPageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
-}
+};
 
-export default async function ActivationPage({ searchParams }: PageProps) {
+export default async function ActivationPage({
+  searchParams,
+}: ActivationPageProps) {
   let status: "success" | "failed" = "failed";
 
   try {
@@ -18,8 +20,7 @@ export default async function ActivationPage({ searchParams }: PageProps) {
         status = "success";
       }
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
+  } catch {
     status = "failed";
   }
 
