@@ -11,7 +11,7 @@ export const memberItems = [
   {
     key: "dashboard",
     label: "Dashboard",
-    href: "/member",
+    href: "/member/dashboard",
     icon: CiGrid41,
   },
   {
@@ -32,7 +32,7 @@ export const adminItems = [
   {
     key: "dashboard",
     label: "Dashboard",
-    href: "/admin",
+    href: "/admin/dashboard",
     icon: CiGrid41,
   },
   {
@@ -56,7 +56,7 @@ export const adminItems = [
   {
     key: "transaction",
     label: "Transaction",
-    href: "/member/transaction",
+    href: "/admin/transaction",
     icon: CiWallet,
   },
 ];

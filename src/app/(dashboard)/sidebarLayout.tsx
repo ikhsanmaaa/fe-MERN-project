@@ -4,6 +4,7 @@ import { cn } from "@/utils/cn";
 import { Button, Listbox, ListboxItem } from "@heroui/react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { CiLogout } from "react-icons/ci";
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -36,7 +37,7 @@ export default function Sidebar({
           />
         </div>
         <ListboxWrapper>
-          <Listbox items={items} variant="solid" aria-label="Dasboard Menu">
+          <Listbox items={items} variant="solid" aria-label="Dasboard-Menu">
             {(items) => (
               <ListboxItem
                 key={items.key}
@@ -47,6 +48,8 @@ export default function Sidebar({
                 textValue={items.label}
                 aria-labelledby={items.label}
                 aria-describedby={items.label}
+                as={Link}
+                href={items.href}
               >
                 <p>{items.label}</p>
               </ListboxItem>
@@ -67,19 +70,4 @@ export default function Sidebar({
       </div>
     </div>
   );
-}
-
-{
-  /* <aside className="w-64 bg-gray-100 h-screen p-4">
-      <ul>
-        {items.map((item) => (
-          <li key={item.href} className="mb-2">
-            <Link href={item.href} className="flex items-center gap-2">
-              {item.icon && <item.icon />}
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </aside> */
 }

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Login() {
   return (
-    <div className="flex w-full flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20">
+    <div className="flex w-full flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20 mt-20">
       <div className="flex w-full lg:w-1/3 flex-col items-center justify-center gap-10">
         <Image
           src="/images/general/logo.png"
