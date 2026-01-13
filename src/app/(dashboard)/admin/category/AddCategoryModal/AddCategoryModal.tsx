@@ -33,6 +33,9 @@ const AddCategoryModal = (props: PropTypes) => {
     handleUploadIcon,
     isPendingMutateUploadFile,
     preview,
+    handleDeleteIcon,
+    isPendingMutateDeleteFile,
+    handleOnClose,
   } = useAddCategoryModal();
 
   useEffect(() => {
@@ -42,12 +45,18 @@ const AddCategoryModal = (props: PropTypes) => {
     }
   }, [isSuccessMutateAddCategory]);
 
+  const disabledSubmit =
+    isPendingMutateAddCategory ||
+    isPendingMutateUploadFile ||
+    isPendingMutateDeleteFile;
+
   return (
     <Modal
       onOpenChange={onOpenChange}
       isOpen={isOpen}
       placement="center"
       scrollBehavior="inside"
+      onClose={() => handleOnClose(onClose)}
     >
       <form onSubmit={handleSubmitForm(handleAddCategory)}>
         <ModalContent className="m-4">
@@ -103,6 +112,8 @@ const AddCategoryModal = (props: PropTypes) => {
                     {...field}
                     onUpload={(files) => handleUploadIcon(files, onChange)}
                     isUploading={isPendingMutateUploadFile}
+                    isDeleting={isPendingMutateDeleteFile}
+                    onDelete={() => handleDeleteIcon(onChange)}
                     isInvalid={errors.icon !== undefined}
                     errorMessage={errors.icon?.message}
                     isDropable
@@ -116,8 +127,8 @@ const AddCategoryModal = (props: PropTypes) => {
             <Button
               color="danger"
               variant="flat"
-              onPress={onClose}
-              disabled={isPendingMutateAddCategory || isPendingMutateUploadFile}
+              onPress={() => handleOnClose(onClose)}
+              disabled={disabledSubmit}
             >
               Cancel
             </Button>
@@ -125,9 +136,9 @@ const AddCategoryModal = (props: PropTypes) => {
               color="danger"
               type="submit"
               onPress={onClose}
-              disabled={isPendingMutateAddCategory || isPendingMutateUploadFile}
+              disabled={disabledSubmit}
             >
-              {isPendingMutateAddCategory || isPendingMutateUploadFile ? (
+              {isPendingMutateAddCategory ? (
                 <Spinner size="sm" color="white" />
               ) : (
                 "Create Category"

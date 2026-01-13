@@ -104,7 +104,7 @@ const InputFile = (props: PropTypes) => {
               isIconOnly
               onPress={onDelete}
               disabled={isDeleting}
-              className="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded bg-danger-100"
+              className="absolute right-2 top-2 z-10 flex h-9 w-9 items-center justify-center rounded bg-danger-100"
             >
               {isDeleting ? (
                 <Spinner size="sm" color="danger" />
@@ -137,7 +137,7 @@ const InputFile = (props: PropTypes) => {
           accept="image/*"
           id={`dropzone-file-${dropzoneId}`}
           onChange={handleOnUpload}
-          disabled={preview !== ""}
+          disabled={!!preview}
           onClick={(e) => {
             e.currentTarget.value = "";
             e.target.dispatchEvent(new Event("Change", { bubbles: true }));

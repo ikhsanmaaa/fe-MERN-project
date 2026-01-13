@@ -35,6 +35,32 @@ const useAddCategoryModal = () => {
     resolver: yupResolver(schema),
   });
   const preview = watch("icon");
+
+  const handleDeleteIcon = (
+    onChange: (files: FileList | undefined) => void
+  ) => {
+    const fileUrl = getValues("icon");
+    if (typeof fileUrl === "string") {
+      mutateDeleteFile({ fileUrl, callback: () => onChange(undefined) });
+    }
+  };
+
+  const handleOnClose = (onClose: () => void) => {
+    const fileUrl = getValues("icon");
+    if (typeof fileUrl === "string") {
+      mutateDeleteFile({
+        fileUrl,
+        callback: () => {
+          reset();
+          onClose();
+        },
+      });
+    } else {
+      reset();
+      onClose();
+    }
+  };
+
   const addCategory = async (payload: ICategory) => {
     const res = await categoryServices.addCategory(payload);
     return res;
@@ -95,6 +121,9 @@ const useAddCategoryModal = () => {
     handleUploadIcon,
     isPendingMutateUploadFile,
     preview,
+    handleDeleteIcon,
+    isPendingMutateDeleteFile,
+    handleOnClose,
   };
 };
 
