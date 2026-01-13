@@ -88,20 +88,24 @@ const DataTable = (props: PropTypes) => {
             onChange={onChangeLimit}
             startContent={<p className="text-small">Show:</p>}
             items={LIMIT_LIST}
+            disallowEmptySelection
           >
             {(item) => (
               <SelectItem key={String(item.value)}>{item.label}</SelectItem>
             )}
           </Select>
         </div>
-        <Pagination
-          isCompact
-          showControls
-          color="danger"
-          page={currentPage}
-          total={totalPages}
-          onChange={onChangePage}
-        />
+        {totalPages > 1 && (
+          <Pagination
+            isCompact
+            showControls
+            color="danger"
+            page={currentPage}
+            total={totalPages}
+            onChange={onChangePage}
+            loop
+          />
+        )}
       </div>
     );
   }, [limit, currentPage, onChangeLimit, onChangePage, totalPages]);

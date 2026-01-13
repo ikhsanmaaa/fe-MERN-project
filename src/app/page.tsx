@@ -1,4 +1,4 @@
-import { Button } from "@heroui/button";
+import ButtonHomePage from "@/ui/ButtonHomePage/buttonHomePage";
 import { Metadata } from "next";
 import Link from "next/link";
 export const metadata: Metadata = {
@@ -8,12 +8,14 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <Link href={"/auth/login"}>
-        <Button color="primary">Login</Button>
-      </Link>
-      <Link href={"/admin/dashboard"}>
-        <Button color="primary">dashboard admin</Button>
-      </Link>
+      <div className="flex justify-evenly">
+        <Link href={"/auth/login"}>
+          <ButtonHomePage buttonName="login" />
+        </Link>
+        <Link href={"/admin/dashboard"}>
+          <ButtonHomePage buttonName="dashboard admin" />
+        </Link>
+      </div>
     </>
   );
 }

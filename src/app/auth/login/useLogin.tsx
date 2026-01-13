@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input, Spinner } from "@heroui/react";
+import { addToast, Button, Input, Spinner } from "@heroui/react";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
@@ -8,7 +8,6 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
-import { cn } from "@/utils/cn";
 import { ILogin } from "@/types/Auth";
 import { signIn } from "next-auth/react";
 
@@ -38,13 +37,26 @@ function FormLogin() {
   const { mutate: mutateLogin, isPending: isPendingLogin } = useMutation({
     mutationFn: loginService,
     onError(errors) {
+      addToast({
+        title: "Login failed",
+        description: errors.message,
+        color: "danger",
+        timeout: 3000,
+        shouldShowTimeoutProgress: true,
+      });
       setError("root", {
         message: errors.message,
       });
     },
     onSuccess: () => {
-      router.push(callbackUrl);
       reset();
+      addToast({
+        title: "Login success!",
+        color: "success",
+        timeout: 3000,
+        shouldShowTimeoutProgress: true,
+      });
+      router.push(`${callbackUrl}`);
     },
   });
   const handleLogin = (data: ILogin) => {
@@ -63,13 +75,12 @@ function FormLogin() {
 
   return (
     <form
-      className={cn(
-        "flex w-80 flex-col gap-4",
-        Object.keys(errors).length > 0 ? "gap-2" : "gap-4"
-      )}
+      className="flex w-full flex-col flex-wrap gap-4"
       onSubmit={handleSubmit(handleLogin)}
     >
-      {errors.root?.message}
+      {errors.root?.message && (
+        <p className="text-sm text-danger">{errors.root.message}</p>
+      )}
       <Controller
         name="identifier"
         control={control}
@@ -77,9 +88,13 @@ function FormLogin() {
           return (
             <Input
               {...field}
-              type="text"
-              label="Email / Username"
+              placeholder="Email / Username"
               variant="bordered"
+              classNames={{
+                inputWrapper: "h-12 px-0 py-0",
+                input: "h-full px-3",
+                label: "hidden",
+              }}
               autoComplete="off"
               isInvalid={errors.identifier !== undefined}
               errorMessage={errors.identifier?.message}
@@ -95,9 +110,14 @@ function FormLogin() {
           return (
             <Input
               {...field}
-              type={isVisible ? "text" : "password"}
-              label="Password"
+              placeholder="Password"
               variant="bordered"
+              classNames={{
+                inputWrapper: "h-12 px-0 py-0",
+                input: "h-full px-3",
+                label: "hidden",
+              }}
+              type={isVisible ? "text" : "password"}
               autoComplete="off"
               isInvalid={errors.password !== undefined}
               errorMessage={errors.password?.message}

@@ -1,73 +1,77 @@
 "use client";
 
-import { cn } from "@/utils/cn";
-import { Button, Listbox, ListboxItem } from "@heroui/react";
-import { signOut } from "next-auth/react";
+import { Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CiLogout } from "react-icons/ci";
-export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
-  <div>{children}</div>
-);
+import { cn } from "@/utils/cn";
+import { signOut } from "next-auth/react";
 
-export default function Sidebar({
-  items,
-}: {
-  items: {
-    key: string;
-    label: string;
-    href: string;
-    icon?: React.ElementType;
-  }[];
-}) {
-  const router = useRouter();
+interface SidebarItem {
+  key: string;
+  label: string;
+  href: string;
+  icon?: React.ElementType;
+}
+
+export default function Sidebar({ items }: { items: SidebarItem[] }) {
   const pathname = usePathname();
+  const router = useRouter();
+
   return (
-    <div className="relative z-50 flex h-screen w-full max-w-[300px] flex-col justify-between border-r-1 border-default-200 bg-white px-4 py-6 transition-all">
+    <aside className="flex h-screen w-[280px] flex-col justify-between border-r border-default-200 bg-white px-4 py-6">
+      {/* TOP */}
       <div>
-        <div className="flex justify-center w-full">
+        {/* LOGO */}
+        <div className="mb-8 flex justify-center">
           <Image
-            src={"/images/general/logo.png"}
+            src="/images/general/logo.png"
             alt="logo"
-            width={180}
-            height={60}
-            className="mb-6 w-32"
+            width={160}
+            height={50}
+            className="cursor-pointer"
             onClick={() => router.push("/")}
           />
         </div>
-        <ListboxWrapper>
-          <Listbox items={items} variant="solid" aria-label="Dasboard-Menu">
-            {(items) => (
-              <ListboxItem
-                key={items.key}
-                className={cn("my-1 h-12 text-2xl", {
-                  "bg-danger-500 text-white": pathname.startsWith(items.href),
-                })}
-                startContent={items.icon && <items.icon />}
-                textValue={items.label}
-                aria-labelledby={items.label}
-                aria-describedby={items.label}
+
+        {/* MENU */}
+        <nav className="flex flex-col gap-2">
+          {items.map((item) => {
+            const isActive = pathname.startsWith(item.href);
+
+            return (
+              <Button
+                key={item.key}
                 as={Link}
-                href={items.href}
+                href={item.href}
+                startContent={item.icon && <item.icon />}
+                variant={isActive ? "solid" : "light"}
+                color={isActive ? "danger" : "default"}
+                className={cn(
+                  "h-12 justify-start gap-3 text-base font-medium",
+                  !isActive && "text-default-700"
+                )}
+                fullWidth
               >
-                <p>{items.label}</p>
-              </ListboxItem>
-            )}
-          </Listbox>
-        </ListboxWrapper>
+                {item.label}
+              </Button>
+            );
+          })}
+        </nav>
       </div>
-      <div className="flex items-center p-1">
-        <Button
-          color="danger"
-          fullWidth
-          variant="light"
-          className="flex justify-start rounded-lg px-2 py-1.5"
-          onPress={() => signOut()}
-        >
-          <CiLogout /> logout
-        </Button>
-      </div>
-    </div>
+
+      {/* BOTTOM */}
+      <Button
+        color="danger"
+        variant="light"
+        className="h-12 justify-start gap-3"
+        startContent={<CiLogout />}
+        onPress={() => signOut()}
+        fullWidth
+      >
+        Logout
+      </Button>
+    </aside>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input, Spinner } from "@heroui/react";
+import { addToast, Button, Input, Spinner } from "@heroui/react";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
@@ -53,8 +53,14 @@ function FormRegister() {
       });
     },
     onSuccess: () => {
-      router.push("/auth/register/success");
       reset();
+      addToast({
+        title: "Login success!",
+        color: "success",
+        timeout: 3000,
+        shouldShowTimeoutProgress: true,
+      });
+      router.push("/auth/register/success");
     },
   });
   const handleRegister = (data: IRegister) => {

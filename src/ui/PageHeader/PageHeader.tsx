@@ -16,7 +16,6 @@ const PageHeader = ({ title, description }: PageHeaderProps) => {
           </p>
         )}
       </div>
-      ;
     </div>
   );
 };

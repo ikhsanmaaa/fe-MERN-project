@@ -1,4 +1,4 @@
-import { Card, CardBody } from "@heroui/card";
+import { Card, CardBody } from "@heroui/react";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";

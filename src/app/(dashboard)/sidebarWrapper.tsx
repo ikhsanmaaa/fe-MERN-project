@@ -18,7 +18,7 @@ export default function SidebarWrapper() {
   } else if (pathname.startsWith("/member")) {
     sidebarItems = memberItems;
   } else {
-    sidebarItems = []; // fallback jika tidak cocok
+    sidebarItems = [];
   }
 
   return <Sidebar items={sidebarItems} />;
