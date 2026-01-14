@@ -56,9 +56,14 @@ const DataTable = (props: PropTypes) => {
       <div className="flex flex-col-reverse items-start justify-between gap-x-4 lg:flex-row lg:items-center">
         <Input
           isClearable
-          className="w-full sm:max-w-24"
+          className="w-full "
           placeholder="search by name"
           startContent={<CiSearch />}
+          classNames={{
+            inputWrapper: "h-12 px-3 py-2",
+            input: "h-full pl-3",
+            label: "hidden",
+          }}
           onClear={onClearSearch}
           onChange={onChangeSearch}
         />

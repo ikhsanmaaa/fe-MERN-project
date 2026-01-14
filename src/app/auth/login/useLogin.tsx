@@ -75,69 +75,74 @@ function FormLogin() {
 
   return (
     <form
-      className="flex w-full flex-col flex-wrap gap-4"
+      className="flex w-full flex-col gap-4"
       onSubmit={handleSubmit(handleLogin)}
     >
       {errors.root?.message && (
         <p className="text-sm text-danger">{errors.root.message}</p>
       )}
+
       <Controller
         name="identifier"
         control={control}
-        render={({ field }) => {
-          return (
-            <Input
-              {...field}
-              placeholder="Email / Username"
-              variant="bordered"
-              classNames={{
-                inputWrapper: "h-12 px-0 py-0",
-                input: "h-full px-3",
-                label: "hidden",
-              }}
-              autoComplete="off"
-              isInvalid={errors.identifier !== undefined}
-              errorMessage={errors.identifier?.message}
-            />
-          );
-        }}
+        render={({ field }) => (
+          <Input
+            {...field}
+            placeholder="Email / Username"
+            variant="bordered"
+            autoComplete="off"
+            isInvalid={!!errors.identifier}
+            errorMessage={errors.identifier?.message}
+            classNames={{
+              inputWrapper: "h-12 px-0 py-0",
+              input: "h-full pl-3 pr-3",
+              label: "hidden",
+            }}
+          />
+        )}
       />
 
       <Controller
         name="password"
         control={control}
-        render={({ field }) => {
-          return (
-            <Input
-              {...field}
-              placeholder="Password"
-              variant="bordered"
-              classNames={{
-                inputWrapper: "h-12 px-0 py-0",
-                input: "h-full px-3",
-                label: "hidden",
-              }}
-              type={isVisible ? "text" : "password"}
-              autoComplete="off"
-              isInvalid={errors.password !== undefined}
-              errorMessage={errors.password?.message}
-              endContent={
-                <button
-                  className="focus:outline-none"
-                  type="button"
-                  onClick={toggleVisibility}
-                >
-                  {isVisible ? (
-                    <FaEye className="text-xl text-default-400 pointer-events-none" />
-                  ) : (
-                    <FaEyeSlash className="text-xl text-default-400 pointer-events-none" />
-                  )}
-                </button>
-              }
-            />
-          );
-        }}
+        render={({ field }) => (
+          <Input
+            {...field}
+            placeholder="Password"
+            variant="bordered"
+            type={isVisible ? "text" : "password"}
+            autoComplete="off"
+            isInvalid={!!errors.password}
+            errorMessage={errors.password?.message}
+            classNames={{
+              inputWrapper: "h-12 px-0 py-0",
+              input: "h-full pl-3 pr-12",
+              label: "hidden",
+            }}
+            endContent={
+              <button
+                type="button"
+                onClick={toggleVisibility}
+                className="
+                flex
+                h-full
+                w-12
+                items-center
+                justify-center
+                focus:outline-none
+              "
+              >
+                {isVisible ? (
+                  <FaEye className="text-lg text-default-400 pointer-events-none" />
+                ) : (
+                  <FaEyeSlash className="text-lg text-default-400 pointer-events-none" />
+                )}
+              </button>
+            }
+          />
+        )}
       />
+
       <Button className="mt-4" color="danger" size="lg" type="submit">
         {isPendingLogin ? <Spinner color="white" size="sm" /> : "Login"}
       </Button>

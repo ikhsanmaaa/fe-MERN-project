@@ -3,7 +3,7 @@
 import categoryServices from "@/services/category.services";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface SetURLParams {
   page?: number;
@@ -18,6 +18,7 @@ interface GetCategoriesParams {
 }
 
 const useCategory = () => {
+  const [selectedId, setSelectedId] = useState<string>("");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -112,6 +113,8 @@ const useCategory = () => {
     handleChangePage,
     handleSearch,
     handleClearSearch,
+    selectedId,
+    setSelectedId,
   };
 };
 

@@ -9,7 +9,6 @@ import {
   DropdownTrigger,
   useDisclosure,
 } from "@heroui/react";
-// import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Key, ReactNode, useCallback } from "react";
 import { CiMenuKebab } from "react-icons/ci";
@@ -17,7 +16,8 @@ import { CiMenuKebab } from "react-icons/ci";
 import useCategory from "./useCategory";
 import { COLUMN_LIST_CATEGORY } from "./categoryConstant";
 import AddCategoryModal from "./AddCategoryModal/AddCategoryModal";
-// import InputFile from "@/ui/InputFile/InputFile";
+import DeleteCategoryModal from "./DeleteCategoryModal/DeleteCategoryModal";
+import Image from "next/image";
 
 const Category = () => {
   const router = useRouter();
@@ -33,10 +33,12 @@ const Category = () => {
     isLoadingCategory,
     isRefetchingCategory,
     refetchCategory,
+    selectedId,
+    setSelectedId,
   } = useCategory();
 
   const addCategoryModal = useDisclosure();
-
+  const deleteCategoryModal = useDisclosure();
   const onClearSearch = () => {
     setURL({
       search: "",
@@ -45,14 +47,19 @@ const Category = () => {
   };
 
   const renderCell = useCallback(
-    (item: Record<string, unknown>, columnKey: Key) => {
-      const value = item[columnKey as keyof typeof item];
+    (category: Record<string, unknown>, columnKey: Key) => {
+      const cellValue = category[columnKey as keyof typeof category];
 
       switch (columnKey) {
-        // case "icon":
-        //   return (
-        //     <Image src={String(value)} alt="icon" width={40} height={40} />
-        //   );
+        case "icon":
+          return (
+            <Image
+              src={String(cellValue)}
+              alt="icon"
+              width={100}
+              height={100}
+            />
+          );
 
         case "actions":
           return (
@@ -64,20 +71,27 @@ const Category = () => {
               </DropdownTrigger>
               <DropdownMenu>
                 <DropdownItem
-                  key="detail"
-                  onPress={() => router.push(`/admin/category/${item._id}`)}
+                  key="detail category button"
+                  onPress={() => router.push(`/admin/${category._id}`)}
                 >
-                  Detail Category
+                  Details
                 </DropdownItem>
-                <DropdownItem key="delete" className="text-danger-500">
-                  Delete Category
+                <DropdownItem
+                  key="delete"
+                  className="text-danger-500"
+                  onPress={() => {
+                    setSelectedId(`${category._id}`);
+                    deleteCategoryModal.onOpen();
+                  }}
+                >
+                  Delete
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           );
 
         default:
-          return value as ReactNode;
+          return cellValue as ReactNode;
       }
     },
     [router]
@@ -103,8 +117,14 @@ const Category = () => {
       />
 
       <AddCategoryModal
-        refetchCategory={refetchCategory}
         {...addCategoryModal}
+        refetchCategory={refetchCategory}
+      />
+      <DeleteCategoryModal
+        {...deleteCategoryModal}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+        refetchCategory={refetchCategory}
       />
     </section>
   );
