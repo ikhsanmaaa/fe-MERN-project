@@ -62,7 +62,7 @@ const AddCategoryModal = (props: PropTypes) => {
         <ModalContent className="m-4">
           <ModalHeader>Add Category</ModalHeader>
           <ModalBody>
-            <div className="flex flex-col w-full flex-wrap md:flex-nowrap gap-4">
+            <div className="flex flex-col w-full flex-wrap md:flex-nowrap gap-2">
               <p className="text-sm font-bold">Information</p>
               <Controller
                 name="name"
@@ -109,6 +109,7 @@ const AddCategoryModal = (props: PropTypes) => {
                 control={control}
                 render={({ field: { onChange, ...field } }) => (
                   <InputFile
+                    label
                     {...field}
                     onUpload={(files) => handleUploadIcon(files, onChange)}
                     isUploading={isPendingMutateUploadFile}

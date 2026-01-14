@@ -15,8 +15,8 @@ import { CiMenuKebab } from "react-icons/ci";
 
 import useCategory from "./useCategory";
 import { COLUMN_LIST_CATEGORY } from "./categoryConstant";
-import AddCategoryModal from "./AddCategoryModal/AddCategoryModal";
-import DeleteCategoryModal from "./DeleteCategoryModal/DeleteCategoryModal";
+import AddCategoryModal from "../../../../hooks/AddCategoryModal/AddCategoryModal";
+import DeleteCategoryModal from "../../../../hooks/DeleteCategoryModal/DeleteCategoryModal";
 import Image from "next/image";
 
 const Category = () => {
@@ -72,7 +72,7 @@ const Category = () => {
               <DropdownMenu>
                 <DropdownItem
                   key="detail category button"
-                  onPress={() => router.push(`/admin/${category._id}`)}
+                  onPress={() => router.push(`/admin/category/${category._id}`)}
                 >
                   Details
                 </DropdownItem>
