@@ -88,16 +88,14 @@ function FormLogin() {
         render={({ field }) => (
           <Input
             {...field}
-            placeholder="Email / Username"
+            fullWidth
+            labelPlacement="outside"
+            size="lg"
+            label="Email / Username"
             variant="bordered"
             autoComplete="off"
             isInvalid={!!errors.identifier}
             errorMessage={errors.identifier?.message}
-            classNames={{
-              inputWrapper: "h-12 px-0 py-0",
-              input: "h-full pl-3 pr-3",
-              label: "hidden",
-            }}
           />
         )}
       />
@@ -108,27 +106,21 @@ function FormLogin() {
         render={({ field }) => (
           <Input
             {...field}
-            placeholder="Password"
+            fullWidth
+            labelPlacement="outside"
+            size="lg"
+            label="Password"
             variant="bordered"
             type={isVisible ? "text" : "password"}
             autoComplete="off"
             isInvalid={!!errors.password}
             errorMessage={errors.password?.message}
-            classNames={{
-              inputWrapper: "h-12 px-0 py-0",
-              input: "h-full pl-3 pr-12",
-              label: "hidden",
-            }}
             endContent={
               <button
                 type="button"
                 onClick={toggleVisibility}
                 className="
-                flex
-                h-full
-                w-12
-                items-center
-                justify-center
+                
                 focus:outline-none
               "
               >

@@ -17,12 +17,8 @@ const schema = yup.object().shape({
 });
 
 const useAddCategoryModal = () => {
-  const {
-    mutateUploadFile,
-    isPendingMutateUploadFile,
-    mutateDeleteFile,
-    isPendingMutateDeleteFile,
-  } = useMediaHandling();
+  const { handleUploadFile, handleDeleteFile } = useMediaHandling();
+
   const {
     control,
     handleSubmit: handleSubmitForm,
@@ -34,51 +30,41 @@ const useAddCategoryModal = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const preview = watch("icon");
 
-  const handleDeleteIcon = (
-    onChange: (files: FileList | undefined) => void
-  ) => {
-    const fileUrl = getValues("icon");
-    if (typeof fileUrl === "string") {
-      mutateDeleteFile({ fileUrl, callback: () => onChange(undefined) });
-    }
-  };
+  const preview = watch("icon");
+  const fileUrl = getValues("icon");
 
   const handleOnClose = (onClose: () => void) => {
-    const fileUrl = getValues("icon");
-    if (typeof fileUrl === "string") {
-      mutateDeleteFile({
-        fileUrl,
-        callback: () => {
-          reset();
-          onClose();
-        },
-      });
-    } else {
+    handleDeleteFile(fileUrl, () => {
       reset();
       onClose();
-    }
+    });
+  };
+
+  const handleDeleteIcon = (
+    onChange: (files: FileList | undefined) => void,
+  ) => {
+    handleDeleteFile(fileUrl, () => onChange(undefined));
+  };
+
+  const handleUploadIcon = (
+    files: FileList,
+    onChange: (files: FileList | undefined) => void,
+  ) => {
+    handleUploadFile(
+      files,
+      onChange,
+      (fileUrl: string | string | undefined) => {
+        if (fileUrl) {
+          setValue("icon", fileUrl);
+        }
+      },
+    );
   };
 
   const addCategory = async (payload: ICategory) => {
     const res = await categoryServices.addCategory(payload);
     return res;
-  };
-
-  const handleUploadIcon = (
-    files: FileList,
-    onChange: (files: FileList | undefined) => void
-  ) => {
-    if (files.length !== 0) {
-      onChange(files);
-      mutateUploadFile({
-        file: files[0],
-        callback: (fileUrl: string) => {
-          setValue("icon", fileUrl);
-        },
-      });
-    }
   };
 
   const {
@@ -119,10 +105,8 @@ const useAddCategoryModal = () => {
     isPendingMutateAddCategory,
     isSuccessMutateAddCategory,
     handleUploadIcon,
-    isPendingMutateUploadFile,
     preview,
     handleDeleteIcon,
-    isPendingMutateDeleteFile,
     handleOnClose,
   };
 };

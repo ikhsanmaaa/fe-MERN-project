@@ -5,15 +5,41 @@ import {
   CardBody,
   CardHeader,
   Input,
+  Spinner,
   Textarea,
 } from "@heroui/react";
+import useInfoTab from "./useInfoTab";
+import { Controller } from "react-hook-form";
+import { useEffect } from "react";
 
 interface PropTypes {
   dataCategory: ICategory;
+  onUpdate: (data: ICategory) => void;
+  isPendingUpdate: boolean;
+  isSuccessUpdate: boolean;
 }
 
 const InfoTab = (props: PropTypes) => {
-  const { dataCategory } = props;
+  const { dataCategory, onUpdate, isPendingUpdate, isSuccessUpdate } = props;
+  const {
+    controlUpdateInfo,
+    handleSubmitUpdateInfo,
+    errorsUpdateInfo,
+    setValueUpdateInfo,
+    resetUpdateInfo,
+  } = useInfoTab();
+
+  useEffect(() => {
+    setValueUpdateInfo("name", `${dataCategory.name}`);
+    setValueUpdateInfo("description", `${dataCategory.description}`);
+  }, [dataCategory]);
+
+  useEffect(() => {
+    if (isSuccessUpdate) {
+      resetUpdateInfo();
+    }
+  }, [isSuccessUpdate]);
+
   return (
     <Card className="w-full p-4 lg:w-1/2">
       <CardHeader className="flex-col items-center">
@@ -23,37 +49,56 @@ const InfoTab = (props: PropTypes) => {
         </p>
       </CardHeader>
       <CardBody>
-        <form className="flex flex-col gap-4" onSubmit={() => {}}>
-          <Input
-            type="text"
-            className="mt-2"
-            label="Name"
-            labelPlacement="outside-top"
-            variant="bordered"
-            defaultValue={dataCategory?.name}
-            classNames={{
-              inputWrapper: "h-12 px-0 py-0",
-              input: "h-full pl-3 ",
-            }}
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={handleSubmitUpdateInfo(onUpdate)}
+        >
+          <Controller
+            name="name"
+            control={controlUpdateInfo}
+            render={({ field }) => (
+              <Input
+                {...field}
+                variant="bordered"
+                label="name"
+                labelPlacement="outside"
+                type="text"
+                classNames={{
+                  inputWrapper: "h-12 px-0 py-0",
+                  input: "h-full px-3",
+                }}
+                isInvalid={errorsUpdateInfo.name !== undefined}
+                errorMessage={errorsUpdateInfo.name?.message}
+                className="mt-2"
+              />
+            )}
           />
-          <Textarea
-            type="text"
-            className="mt-2"
-            label="Description"
-            labelPlacement="outside-top"
-            variant="bordered"
-            defaultValue={dataCategory?.description}
-            classNames={{
-              inputWrapper: "h-12 px-0 py-0",
-              input: "h-full pl-3 pt-2",
-            }}
+          <Controller
+            name="description"
+            control={controlUpdateInfo}
+            render={({ field }) => (
+              <Textarea
+                {...field}
+                label="description"
+                variant="bordered"
+                labelPlacement="outside"
+                type="text"
+                isInvalid={errorsUpdateInfo.description !== undefined}
+                errorMessage={errorsUpdateInfo.description?.message}
+              />
+            )}
           />
           <Button
             color="danger"
             className="mt-2 disabled:bg-default-500"
             type="submit"
+            disabled={isPendingUpdate || !dataCategory?._id}
           >
-            Save Changes
+            {isPendingUpdate ? (
+              <Spinner size="sm" color="white" />
+            ) : (
+              "Save Changes"
+            )}
           </Button>
         </form>
       </CardBody>

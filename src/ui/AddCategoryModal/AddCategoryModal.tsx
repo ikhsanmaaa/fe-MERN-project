@@ -13,6 +13,7 @@ import useAddCategoryModal from "./useAddCategoryModal";
 import { Controller } from "react-hook-form";
 import InputFile from "@/ui/InputFile/InputFile";
 import { useEffect } from "react";
+import useMediaHandling from "@/hooks/useMediaHandling";
 
 interface PropTypes {
   isOpen: boolean;
@@ -31,12 +32,13 @@ const AddCategoryModal = (props: PropTypes) => {
     isPendingMutateAddCategory,
     isSuccessMutateAddCategory,
     handleUploadIcon,
-    isPendingMutateUploadFile,
     preview,
     handleDeleteIcon,
-    isPendingMutateDeleteFile,
     handleOnClose,
   } = useAddCategoryModal();
+
+  const { isPendingMutateDeleteFile, isPendingMutateUploadFile } =
+    useMediaHandling();
 
   useEffect(() => {
     if (isSuccessMutateAddCategory) {
@@ -73,12 +75,8 @@ const AddCategoryModal = (props: PropTypes) => {
                     autoFocus
                     variant="bordered"
                     label="name"
-                    labelPlacement="outside-top"
+                    labelPlacement="outside"
                     type="text"
-                    classNames={{
-                      inputWrapper: "h-12 px-0 py-0",
-                      input: "h-full px-3",
-                    }}
                     isInvalid={errors.name !== undefined}
                     errorMessage={errors.name?.message}
                   />
@@ -92,12 +90,8 @@ const AddCategoryModal = (props: PropTypes) => {
                     {...field}
                     label="description"
                     variant="bordered"
-                    labelPlacement="outside-top"
+                    labelPlacement="outside"
                     type="text"
-                    classNames={{
-                      inputWrapper: "h-full px-0 py-0",
-                      input: "h-full px-3 py-1",
-                    }}
                     isInvalid={errors.description !== undefined}
                     errorMessage={errors.description?.message}
                   />
@@ -137,7 +131,9 @@ const AddCategoryModal = (props: PropTypes) => {
               color="danger"
               type="submit"
               onPress={onClose}
-              disabled={disabledSubmit}
+              disabled={
+                disabledSubmit || isPendingMutateAddCategory || !preview
+              }
             >
               {isPendingMutateAddCategory ? (
                 <Spinner size="sm" color="white" />

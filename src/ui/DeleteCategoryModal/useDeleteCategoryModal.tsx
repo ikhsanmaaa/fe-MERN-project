@@ -7,6 +7,7 @@ const useDeleteCategoryModal = () => {
     const res = await categoryServices.deleteCategory(id);
     return res;
   };
+
   const {
     mutate: mutateDeleteCategory,
     isPending: isPendingMutateDeleteCategory,

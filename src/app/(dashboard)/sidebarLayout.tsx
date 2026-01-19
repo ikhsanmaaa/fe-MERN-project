@@ -21,9 +21,7 @@ export default function Sidebar({ items }: { items: SidebarItem[] }) {
 
   return (
     <aside className="flex h-screen w-[280px] flex-col justify-between border-r border-default-200 bg-white px-4 py-6">
-      {/* TOP */}
       <div>
-        {/* LOGO */}
         <div className="mb-8 flex justify-center">
           <Image
             src="/images/general/logo.png"
@@ -35,7 +33,6 @@ export default function Sidebar({ items }: { items: SidebarItem[] }) {
           />
         </div>
 
-        {/* MENU */}
         <nav className="flex flex-col gap-2">
           {items.map((item) => {
             const isActive = pathname.startsWith(item.href);
@@ -61,7 +58,6 @@ export default function Sidebar({ items }: { items: SidebarItem[] }) {
         </nav>
       </div>
 
-      {/* BOTTOM */}
       <Button
         color="danger"
         variant="light"

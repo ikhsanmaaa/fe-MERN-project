@@ -1,15 +1,19 @@
-import { useRef } from "react";
+"use client";
+import { DELAY } from "@/constants/list.constants";
+import { useEffect, useState } from "react";
 
-const useDebounce = () => {
-  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
-  const debounce = (func: () => void, delay: number) => {
-    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
-    debounceTimeout.current = setTimeout(() => {
-      func();
-      debounceTimeout.current = null;
+export function useDebounce<T>(value: T, delay = DELAY) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
     }, delay);
-  };
-  return debounce;
-};
 
-export default useDebounce;
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
