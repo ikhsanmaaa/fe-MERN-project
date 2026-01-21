@@ -30,6 +30,7 @@ interface PropTypes {
   onChangePage: (page: number) => void;
   onClearSearch: () => void;
   onClickButtonTopContent?: () => void;
+  onClickButtonDelete?: () => void;
   renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode;
   totalPages: number;
 }
@@ -48,6 +49,7 @@ const DataTable = (props: PropTypes) => {
     onChangeSearch,
     onClearSearch,
     onClickButtonTopContent,
+    onClickButtonDelete,
     renderCell,
     totalPages,
   } = props;

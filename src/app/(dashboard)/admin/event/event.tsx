@@ -11,6 +11,7 @@ import useEvent from "./useEvent";
 import { COLUMN_LIST_EVENT } from "./event.constants";
 import DropdownAction from "@/ui/DropdownAction/DropdownAction";
 import AddEventModal from "@/ui/AddEventModal copy/AddEventModal";
+import DeleteEventModal from "@/ui/DeleteEventModal/DeleteEventModal";
 
 const Event = () => {
   const router = useRouter();
@@ -28,11 +29,12 @@ const Event = () => {
     isLoadingEvent,
     isRefetchingEvent,
     refetchEvent,
+    selectedId,
     setSelectedId,
   } = useEvent();
 
   const addEventModal = useDisclosure();
-  // const deleteEventModal = useDisclosure();
+  const deleteEventModal = useDisclosure();
 
   const renderCell = useCallback(
     (event: Record<string, unknown>, columnKey: Key) => {
@@ -50,14 +52,14 @@ const Event = () => {
             />
           );
 
-        case "isPublish":
+        case "isOnline":
           return (
             <Chip
               color={cellValue ? "success" : "warning"}
               size="sm"
               variant="flat"
             >
-              {cellValue === true ? "published" : "not published"}
+              {cellValue === true ? "Online" : "not Online"}
             </Chip>
           );
 
@@ -68,7 +70,8 @@ const Event = () => {
                 router.push(`/admin/event/${event._id}`)
               }
               onPressButtonDelete={() => {
-                setSelectedId(`${event._id}`);
+                setSelectedId(String(event._id));
+                deleteEventModal.onOpen();
               }}
             />
           );
@@ -99,7 +102,14 @@ const Event = () => {
         onClickButtonTopContent={addEventModal.onOpen}
       />
 
-      <AddEventModal {...addEventModal} refetchCategory={refetchEvent} />
+      <AddEventModal {...addEventModal} refetchEvent={refetchEvent} />
+
+      <DeleteEventModal
+        {...deleteEventModal}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+        refetchEvent={refetchEvent}
+      />
     </section>
   );
 };

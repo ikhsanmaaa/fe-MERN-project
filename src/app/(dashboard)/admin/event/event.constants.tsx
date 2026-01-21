@@ -4,7 +4,7 @@ const COLUMN_LIST_EVENT = [
   { name: "Start Date", uid: "startDate" },
   { name: "End Date", uid: "endDate" },
   { name: "ACTIONS", uid: "actions" },
-  { name: "STATUS", uid: "isPublish" },
+  { name: "STATUS", uid: "isOnline" },
 ];
 
 export { COLUMN_LIST_EVENT };

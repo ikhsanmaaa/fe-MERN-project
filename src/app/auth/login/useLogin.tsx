@@ -75,7 +75,7 @@ function FormLogin() {
 
   return (
     <form
-      className="flex w-full flex-col gap-4"
+      className="flex w-full flex-col gap-2"
       onSubmit={handleSubmit(handleLogin)}
     >
       {errors.root?.message && (

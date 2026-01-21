@@ -9,42 +9,42 @@ import {
   Spinner,
 } from "@heroui/react";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import useDeleteCategoryModal from "./useDeleteCategoryModal";
+import useDeleteEventModal from "./useDeleteEventModal";
 
 interface PropTypes {
   isOpen: boolean;
   onClose: () => void;
-  refetchCategory: () => void;
+  refetchEvent: () => void;
   onOpenChange: () => void;
   selectedId: string;
   setSelectedId: Dispatch<SetStateAction<string>>;
 }
 
-const DeleteCategoryModal = (props: PropTypes) => {
+const DeleteEventModal = (props: PropTypes) => {
   const {
     isOpen,
     onOpenChange,
-    refetchCategory,
+    refetchEvent,
     onClose,
     selectedId,
     setSelectedId,
   } = props;
 
   const {
-    mutateDeleteCategory,
-    isPendingMutateDeleteCategory,
-    isSuccessMutateDeleteCategory,
-  } = useDeleteCategoryModal();
+    mutateDeleteEvent,
+    isPendingMutateDeleteEvent,
+    isSuccessMutateDeleteEvent,
+  } = useDeleteEventModal();
 
   useEffect(() => {
-    if (isSuccessMutateDeleteCategory) {
+    if (isSuccessMutateDeleteEvent) {
       onClose();
       setSelectedId("");
-      refetchCategory();
+      refetchEvent();
     }
-  }, [isSuccessMutateDeleteCategory]);
+  }, [isSuccessMutateDeleteEvent]);
 
-  const handleDelete = () => {
+  const handleDeleteEvent = () => {
     if (!selectedId) {
       addToast({
         title: "Error",
@@ -54,7 +54,7 @@ const DeleteCategoryModal = (props: PropTypes) => {
       return;
     }
 
-    mutateDeleteCategory(selectedId);
+    mutateDeleteEvent(selectedId);
   };
 
   return (
@@ -65,31 +65,31 @@ const DeleteCategoryModal = (props: PropTypes) => {
       scrollBehavior="inside"
     >
       <ModalContent className="m-4">
-        <ModalHeader>Delete Category</ModalHeader>
+        <ModalHeader>Delete Event</ModalHeader>
         <ModalBody>
           <p className="text-medium ">
-            Are you sure you want to delete this category?
+            Are you sure you want to delete this Event?
           </p>
         </ModalBody>
         <ModalFooter>
           <Button
             color="danger"
             variant="flat"
-            onPress={handleDelete}
-            disabled={isPendingMutateDeleteCategory || !selectedId}
+            onPress={handleDeleteEvent}
+            disabled={isPendingMutateDeleteEvent || !selectedId}
           >
             Cancel
           </Button>
           <Button
             color="danger"
             type="submit"
-            disabled={isPendingMutateDeleteCategory}
-            onPress={() => mutateDeleteCategory(selectedId)}
+            disabled={isPendingMutateDeleteEvent}
+            onPress={() => mutateDeleteEvent(selectedId)}
           >
-            {isPendingMutateDeleteCategory ? (
+            {isPendingMutateDeleteEvent ? (
               <Spinner size="sm" color="white" />
             ) : (
-              "Delete Category"
+              "Delete Event"
             )}
           </Button>
         </ModalFooter>
@@ -98,4 +98,4 @@ const DeleteCategoryModal = (props: PropTypes) => {
   );
 };
 
-export default DeleteCategoryModal;
+export default DeleteEventModal;

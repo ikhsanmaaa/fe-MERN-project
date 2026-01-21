@@ -1,20 +1,23 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { addToast } from "@heroui/react";
 
-interface Props {
+export default function AuthSessionGuard({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-export default function AuthSessionGuard({ children }: Props) {
+}) {
   const { status } = useSession();
   const router = useRouter();
+  const hasShownToast = useRef(false);
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (status === "unauthenticated" && !hasShownToast.current) {
+      hasShownToast.current = true;
+
       addToast({
         title: "Session expired",
         description: "Silakan login kembali",

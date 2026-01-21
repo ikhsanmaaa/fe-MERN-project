@@ -59,7 +59,9 @@ const Category = () => {
                 router.push(`/admin/category/${category._id}`)
               }
               onPressButtonDelete={() => {
-                setSelectedId(`${category._id}`);
+                setSelectedId(String(category._id));
+
+                deleteCategoryModal.onOpen();
               }}
             />
           );
@@ -68,9 +70,8 @@ const Category = () => {
           return cellValue as ReactNode;
       }
     },
-    [router],
+    [router, setSelectedId, deleteCategoryModal],
   );
-
   return (
     <section>
       <DataTable

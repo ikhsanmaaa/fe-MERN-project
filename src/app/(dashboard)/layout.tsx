@@ -1,4 +1,3 @@
-import AuthSessionGuard from "@/libs/auth/AuthSessionGuard";
 import SidebarWrapper from "./sidebarWrapper";
 
 export default function DashboardLayout({
@@ -9,9 +8,7 @@ export default function DashboardLayout({
   return (
     <div className="max-w-screen-3xl 3xl:container flex">
       <SidebarWrapper />
-      <AuthSessionGuard>
-        <main className="h-screen w-full overflow-y-auto p-8">{children}</main>
-      </AuthSessionGuard>
+      <main className="h-screen w-full overflow-y-auto p-8">{children}</main>
     </div>
   );
 }

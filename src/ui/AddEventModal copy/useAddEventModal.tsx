@@ -2,34 +2,51 @@
 import useMediaHandling from "@/hooks/useMediaHandling";
 import categoryServices from "@/services/category.services";
 import eventServices from "@/services/events.services";
-import { IEvent } from "@/types/Event";
-import { addToast, DateValue } from "@heroui/react";
+import { IEvent, IEventForm } from "@/types/Event";
+
+import { toDateStandard } from "@/utils/date";
+import { addToast } from "@heroui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  DateValue,
+  getLocalTimeZone,
+  now,
+  ZonedDateTime,
+} from "@internationalized/date";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
-const schema = yup.object().shape({
+const schema = yup.object({
   name: yup.string().required("Please input name"),
   slug: yup.string().required("Please input slug"),
-  category: yup.string().required("please select category"),
-  description: yup.string().required("please input description"),
-  startDate: yup.mixed<DateValue>().required("please select start date"),
-  endDate: yup.mixed<DateValue>().required("please select end date"),
-  isPublished: yup.string().required("please select status"),
-  isFeatured: yup.string().required("please select featured"),
-  isOnline: yup.string().required("please select online or offline"),
-  region: yup.string().required("please select region"),
+  category: yup.string().required("Please select category"),
+  description: yup.string().required("Please input description"),
+
+  startDate: yup.mixed<ZonedDateTime>().required("Please select start date"),
+
+  endDate: yup.mixed<ZonedDateTime>().required("Please select end date"),
+
+  isOnline: yup
+    .mixed<"true" | "false">()
+    .oneOf(["true", "false"])
+    .required("Please select status"),
+
+  isFeatured: yup
+    .mixed<"true" | "false">()
+    .oneOf(["true", "false"])
+    .required("Please select featured"),
+
+  region: yup.mixed<string>().required("Please select region"),
+
   banner: yup.mixed<FileList | string>().required("Please input banner"),
+
+  latitude: yup.string().required("Please input latitude coordinate"),
+  longitude: yup.string().required("Please input longitude coordinate"),
 });
 
 const useAddEventModal = () => {
-  const {
-    isPendingMutateUploadFile,
-    isPendingMutateDeleteFile,
-    handleDeleteFile,
-    handleUploadFile,
-  } = useMediaHandling();
+  const { handleDeleteFile, handleUploadFile } = useMediaHandling();
 
   const {
     control,
@@ -39,8 +56,12 @@ const useAddEventModal = () => {
     watch,
     getValues,
     setValue,
-  } = useForm({
+  } = useForm<IEventForm>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      startDate: now(getLocalTimeZone()),
+      endDate: now(getLocalTimeZone()),
+    },
   });
 
   const preview = watch("banner");
@@ -68,7 +89,10 @@ const useAddEventModal = () => {
       onChange,
       (fileUrl: string | string | undefined) => {
         if (fileUrl) {
-          setValue("banner", fileUrl);
+          setValue("banner", fileUrl, {
+            shouldValidate: true,
+            shouldDirty: true,
+          });
         }
       },
     );
@@ -80,7 +104,7 @@ const useAddEventModal = () => {
   });
 
   const addEvent = async (payload: IEvent) => {
-    const res = await eventServices.addEvents(payload);
+    const res = await eventServices.addEvent(payload);
     return res;
   };
 
@@ -111,7 +135,21 @@ const useAddEventModal = () => {
     },
   });
 
-  const handleAddEvent = (data: IEvent) => mutateAddEvent(data);
+  const handleAddEvent = (data: IEventForm) => {
+    const payload = {
+      ...data,
+      isFeatured: data.isFeatured === "true",
+      isOnline: data.isOnline === "true",
+      startDate: toDateStandard(data.startDate)!,
+      endDate: toDateStandard(data.endDate, true)!,
+      location: {
+        region: data.region,
+        coordinates: [Number(data.latitude), Number(data.longitude)],
+      },
+      banner: data.banner,
+    };
+    mutateAddEvent(payload);
+  };
 
   return {
     control,
@@ -121,12 +159,10 @@ const useAddEventModal = () => {
     handleAddEvent,
     isPendingMutateAddEvent,
     isSuccessMutateAddEvent,
-    isPendingMutateUploadFile,
 
     preview,
     handleDeleteBanner,
     handleUploadBanner,
-    isPendingMutateDeleteFile,
     handleOnClose,
 
     dataCategory,

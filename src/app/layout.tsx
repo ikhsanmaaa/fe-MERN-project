@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "../utils/providers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/auth/auth";
+import AuthSessionGuard from "@/libs/auth/AuthSessionGuard";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -24,7 +25,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className="light">
       <body className={`${inter.variable} antialiased`}>
-        <Providers session={session}>{children}</Providers>
+        <Providers session={session}>
+          <AuthSessionGuard>{children} </AuthSessionGuard>
+        </Providers>
       </body>
     </html>
   );

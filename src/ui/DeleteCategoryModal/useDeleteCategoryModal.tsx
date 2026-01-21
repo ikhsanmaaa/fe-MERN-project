@@ -30,6 +30,7 @@ const useDeleteCategoryModal = () => {
       });
     },
   });
+
   return {
     mutateDeleteCategory,
     isPendingMutateDeleteCategory,
