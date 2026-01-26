@@ -10,7 +10,7 @@ import useChangeUrl from "@/hooks/useChangeUrl";
 import useEvent from "./useEvent";
 import { COLUMN_LIST_EVENT } from "./event.constants";
 import DropdownAction from "@/ui/DropdownAction/DropdownAction";
-import AddEventModal from "@/ui/AddEventModal copy/AddEventModal";
+import AddEventModal from "@/ui/AddEventModal/AddEventModal";
 import DeleteEventModal from "@/ui/DeleteEventModal/DeleteEventModal";
 
 const Event = () => {

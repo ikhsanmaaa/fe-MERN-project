@@ -7,7 +7,7 @@ import authServices from "@/services/auth.services";
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24,
+    maxAge: 60 * 60 * 3,
   },
   secret: environment.AUTH_SECRET,
   providers: [

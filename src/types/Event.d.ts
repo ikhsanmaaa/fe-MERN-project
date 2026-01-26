@@ -1,7 +1,8 @@
 import { DateValue } from "@internationalized/date";
-
-interface IEvent {
+import { DateValue } from "@internationalized/date";
+export interface IEvent {
   name: string;
+  _id: string;
   slug: string;
   category: string;
   isFeatured: boolean;
@@ -16,24 +17,86 @@ interface IEvent {
   banner: string | FileList;
 }
 
-import { DateValue } from "@internationalized/date";
+export interface IEventUpdateInfoPayload {
+  name?: string;
+  _id?: string;
+  slug?: string;
+  category?: string;
+  description?: string;
 
-interface IEventForm {
+  isOnline?: boolean;
+  isFeatured?: boolean;
+
+  startDate?: string;
+  endDate?: string;
+
+  location?: {
+    region: string;
+    coordinates: number[];
+  };
+}
+
+export interface IEventUpdateInfoForm {
+  name: string;
+  _id?: string;
+  slug: string;
+  category: string;
+
+  description: string;
+
+  isOnline: "true" | "false";
+  isFeatured: "true" | "false";
+
+  startDate: ZonedDateTime;
+  endDate: ZonedDateTime;
+  region: string;
+  latitude: string;
+  longitude: string;
+}
+
+export interface IEventCreateForm {
   name: string;
   slug: string;
   category: string;
   description: string;
 
-  isFeatured: "true" | "false";
-  isOnline: "true" | "false";
-
   startDate: ZonedDateTime;
   endDate: ZonedDateTime;
 
+  isOnline: "true" | "false";
+  isFeatured: "true" | "false";
+
   region: string;
-  banner: string | FileList;
   latitude: string;
   longitude: string;
+
+  banner: FileList | string;
 }
 
-export type { IEvent, IEventForm };
+export interface IEventCreatePayload {
+  name: string;
+  slug: string;
+  category: string;
+  description: string;
+
+  isOnline: boolean;
+  isFeatured: boolean;
+
+  startDate: string;
+  endDate: string;
+
+  location: {
+    region: string;
+    coordinates: number[];
+  };
+
+  banner: File | string;
+}
+
+export interface IEventUpdateBannerPayload {
+  banner: File;
+}
+
+export interface IEventBannerForm {
+  banner: FileList;
+}

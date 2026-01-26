@@ -2,7 +2,7 @@
 import useMediaHandling from "@/hooks/useMediaHandling";
 import categoryServices from "@/services/category.services";
 import eventServices from "@/services/events.services";
-import { IEvent, IEventForm } from "@/types/Event";
+import { IEventCreateForm, IEventCreatePayload } from "@/types/Event";
 
 import { toDateStandard } from "@/utils/date";
 import { addToast } from "@heroui/react";
@@ -37,7 +37,7 @@ const schema = yup.object({
     .oneOf(["true", "false"])
     .required("Please select featured"),
 
-  region: yup.mixed<string>().required("Please select region"),
+  region: yup.string().required("Please select region"),
 
   banner: yup.mixed<FileList | string>().required("Please input banner"),
 
@@ -56,7 +56,7 @@ const useAddEventModal = () => {
     watch,
     getValues,
     setValue,
-  } = useForm<IEventForm>({
+  } = useForm<IEventCreateForm>({
     resolver: yupResolver(schema),
     defaultValues: {
       startDate: now(getLocalTimeZone()),
@@ -103,7 +103,7 @@ const useAddEventModal = () => {
     queryFn: () => categoryServices.getCategories(),
   });
 
-  const addEvent = async (payload: IEvent) => {
+  const addEvent = async (payload: IEventCreatePayload) => {
     const res = await eventServices.addEvent(payload);
     return res;
   };
@@ -135,19 +135,27 @@ const useAddEventModal = () => {
     },
   });
 
-  const handleAddEvent = (data: IEventForm) => {
-    const payload = {
-      ...data,
+  const handleAddEvent = (data: IEventCreateForm) => {
+    const payload: IEventCreatePayload = {
+      name: data.name,
+      slug: data.slug,
+      category: data.category,
+      description: data.description,
+
       isFeatured: data.isFeatured === "true",
       isOnline: data.isOnline === "true",
+
       startDate: toDateStandard(data.startDate)!,
       endDate: toDateStandard(data.endDate, true)!,
+
       location: {
         region: data.region,
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },
-      banner: data.banner,
+
+      banner: data.banner instanceof FileList ? data.banner[0] : data.banner,
     };
+
     mutateAddEvent(payload);
   };
 
