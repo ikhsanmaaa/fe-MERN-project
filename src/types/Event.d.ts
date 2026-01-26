@@ -75,6 +75,7 @@ export interface IEventCreateForm {
 
 export interface IEventCreatePayload {
   name: string;
+  _id?: string;
   slug: string;
   category: string;
   description: string;

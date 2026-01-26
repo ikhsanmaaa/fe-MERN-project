@@ -11,6 +11,8 @@ import {
 import useUpdateEvent from "./useUpdateEvent";
 import { addToast } from "@heroui/react";
 import { toDateStandard } from "@/utils/date";
+import eventServices from "@/services/events.services";
+import regionServices from "@/services/region.services";
 
 const useDetailEvent = () => {
   const params = useParams<{ id: string }>();
@@ -117,6 +119,13 @@ const useDetailEvent = () => {
       banner: file,
     });
   };
+
+  const { data: dataDefaultRegion, isPending: isPendingDefaultRegion } =
+    useQuery({
+      queryKey: ["defaultRegion"],
+      queryFn: () => regionServices.getRegencyById(dataEvent?.location?.region),
+      enabled: !!dataEvent?.location?.region,
+    });
   return {
     dataEvent,
     isLoading,
@@ -127,6 +136,8 @@ const useDetailEvent = () => {
     handleUploadEventBanner,
     isPendingMutateUpdateEventBanner,
     isSuccessMutateUpdateEventBanner,
+    dataDefaultRegion,
+    isPendingDefaultRegion,
   };
 };
 

@@ -16,6 +16,8 @@ const DetailEvent = () => {
     handleUploadEventBanner,
     isPendingMutateUpdateEventBanner,
     isSuccessMutateUpdateEventBanner,
+    dataDefaultRegion,
+    isPendingDefaultRegion,
   } = useDetailEvent();
 
   return (
@@ -38,6 +40,8 @@ const DetailEvent = () => {
           <InfoTabSkeleton />
         ) : (
           <InfoTab
+            dataDefaultRegion={dataDefaultRegion?.data?.data[0].name}
+            isPendingDefaultRegion={isPendingDefaultRegion}
             dataEvent={dataEvent}
             onUpdate={handleUploadEvent}
             isPendingUpdate={isPendingMutateUpdateEvent}

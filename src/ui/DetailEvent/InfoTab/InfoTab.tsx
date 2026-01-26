@@ -1,4 +1,4 @@
-import { IEvent, IEventUpdateInfoForm } from "@/types/Event";
+import { IEventCreatePayload, IEventUpdateInfoForm } from "@/types/Event";
 import {
   Autocomplete,
   AutocompleteItem,
@@ -27,16 +27,30 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { DELAY } from "@/constants/list.constants";
 import { useQuery } from "@tanstack/react-query";
 import eventServices from "@/services/events.services";
+import regionServices from "@/services/region.services";
 
 interface PropTypes {
-  dataEvent: IEventUpdateInfoForm;
+  dataEvent: IEventCreatePayload;
   onUpdate: (data: IEventUpdateInfoForm) => void;
   isPendingUpdate: boolean;
   isSuccessUpdate: boolean;
+  dataDefaultRegion: string;
+  isPendingDefaultRegion: boolean;
 }
 
 const InfoTab = (props: PropTypes) => {
-  const { dataEvent, onUpdate, isPendingUpdate, isSuccessUpdate } = props;
+  const {
+    dataEvent,
+    onUpdate,
+    isPendingUpdate,
+    isSuccessUpdate,
+    dataDefaultRegion,
+    isPendingDefaultRegion,
+  } = props;
+
+  const [searchRegency, setSearchRegency] = useState("");
+
+  const debouncedSearchRegion = useDebounce(searchRegency, DELAY);
 
   const {
     controlUpdateInfoEvent,
@@ -67,20 +81,25 @@ const InfoTab = (props: PropTypes) => {
       dataEvent.isFeatured ? "true" : "false",
     );
     setValueUpdateInfoEvent("description", `${dataEvent.description}`);
-    setValueUpdateInfoEvent("region", `${dataEvent.region}`);
-    setValueUpdateInfoEvent("latitude", `${dataEvent.latitude}`);
-    setValueUpdateInfoEvent("longitude", `${dataEvent.longitude}`);
+    setValueUpdateInfoEvent("region", `${dataEvent.location.region}`);
+    setValueUpdateInfoEvent("latitude", `${dataEvent.location.coordinates[0]}`);
+    setValueUpdateInfoEvent(
+      "longitude",
+      `${dataEvent.location.coordinates[1]}`,
+    );
   }, [dataEvent]);
+
+  useEffect(() => {
+    if (dataDefaultRegion) {
+      setSearchRegency(dataDefaultRegion);
+    }
+  }, [dataDefaultRegion]);
 
   useEffect(() => {
     if (isSuccessUpdate) {
       resetUpdateInfoEvent();
     }
   }, [isSuccessUpdate]);
-
-  const [searchRegency, setSearchRegency] = useState("");
-
-  const debouncedSearchRegion = useDebounce(searchRegency, DELAY);
 
   const { data: dataRegion = [], isFetching: isFetchingRegion } = useQuery<
     IRegion[]
@@ -92,7 +111,9 @@ const InfoTab = (props: PropTypes) => {
       );
       return res.data.data;
     },
-    enabled: debouncedSearchRegion.trim() !== "",
+    enabled:
+      typeof debouncedSearchRegion === "string" &&
+      debouncedSearchRegion.trim() !== "",
   });
 
   return (
@@ -147,6 +168,7 @@ const InfoTab = (props: PropTypes) => {
               <Autocomplete
                 {...field}
                 defaultItems={dataCategory?.data.data || []}
+                selectedKey={field.value ?? null}
                 variant="bordered"
                 label="category"
                 labelPlacement="inside"
@@ -202,6 +224,7 @@ const InfoTab = (props: PropTypes) => {
             render={({ field }) => (
               <Select
                 {...field}
+                selectedKeys={[field.value]}
                 variant="bordered"
                 label="Online"
                 labelPlacement="inside"
@@ -220,6 +243,7 @@ const InfoTab = (props: PropTypes) => {
             render={({ field }) => (
               <Select
                 {...field}
+                selectedKeys={[field.value]}
                 variant="bordered"
                 label="Feature"
                 labelPlacement="inside"
@@ -249,11 +273,14 @@ const InfoTab = (props: PropTypes) => {
           />
 
           <p className="text-sm font-bold">Location</p>
+
           <Controller
+            key={dataDefaultRegion ?? "loading"}
             name="region"
             control={controlUpdateInfoEvent}
             render={({ field }) => (
               <Autocomplete
+                defaultInputValue={dataDefaultRegion}
                 items={dataRegion}
                 inputValue={searchRegency}
                 onInputChange={setSearchRegency}
@@ -275,7 +302,10 @@ const InfoTab = (props: PropTypes) => {
                 }}
               >
                 {(region: IRegion) => (
-                  <AutocompleteItem key={region.id.toString()}>
+                  <AutocompleteItem
+                    key={String(region.id)}
+                    textValue={region.name}
+                  >
                     {region.name}
                   </AutocompleteItem>
                 )}

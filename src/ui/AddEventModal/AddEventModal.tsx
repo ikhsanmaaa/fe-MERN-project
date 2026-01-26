@@ -216,8 +216,8 @@ const AddEventModal = (props: PropTypes) => {
                       variant="bordered"
                       label="Feature"
                       labelPlacement="inside"
-                      isInvalid={errors.isOnline !== undefined}
-                      errorMessage={errors.isOnline?.message}
+                      isInvalid={errors.isFeatured !== undefined}
+                      errorMessage={errors.isFeatured?.message}
                       disallowEmptySelection
                     >
                       <SelectItem key="true">Yes</SelectItem>
