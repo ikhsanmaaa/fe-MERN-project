@@ -37,7 +37,10 @@ const schema = yup.object({
     .oneOf(["true", "false"])
     .required("Please select featured"),
 
-  region: yup.string().required("Please select region"),
+  region: yup
+    .number()
+    .typeError("Please select region")
+    .required("Please select region"),
 
   banner: yup.mixed<FileList | string>().required("Please input banner"),
 
@@ -149,13 +152,12 @@ const useAddEventModal = () => {
       endDate: toDateStandard(data.endDate, true)!,
 
       location: {
-        region: data.region,
+        region: Number(data.region),
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },
 
       banner: data.banner instanceof FileList ? data.banner[0] : data.banner,
     };
-
     mutateAddEvent(payload);
   };
 

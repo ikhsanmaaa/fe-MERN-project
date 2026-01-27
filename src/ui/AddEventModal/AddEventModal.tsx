@@ -24,7 +24,7 @@ import { IRegion } from "@/types/Region";
 import eventServices from "@/services/events.services";
 import { useDebounce } from "@/hooks/useDebounce";
 import { DELAY } from "@/constants/list.constants";
-import { getLocalTimeZone, now, today } from "@internationalized/date";
+import { getLocalTimeZone, now } from "@internationalized/date";
 import useMediaHandling from "@/hooks/useMediaHandling";
 
 interface PropTypes {
@@ -259,17 +259,17 @@ const AddEventModal = (props: PropTypes) => {
                     selectedKey={field.value}
                     onSelectionChange={(key) => {
                       const selected = dataRegion.find(
-                        (item) => item.id.toString() === key,
+                        (item) => item.id.toString() === key?.toString(),
                       );
 
                       if (selected) {
-                        field.onChange(selected.id.toString());
+                        field.onChange(selected.id);
                         setSearchRegency(selected.name);
                       }
                     }}
                   >
                     {(region: IRegion) => (
-                      <AutocompleteItem key={region.id.toString()}>
+                      <AutocompleteItem key={region.id}>
                         {region.name}
                       </AutocompleteItem>
                     )}

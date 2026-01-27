@@ -11,7 +11,7 @@ export interface IEvent {
   startDate: string;
   endDate: string;
   location?: {
-    region: string;
+    region: number;
     coordinates: number[];
   };
   banner: string | FileList;
@@ -31,7 +31,7 @@ export interface IEventUpdateInfoPayload {
   endDate?: string;
 
   location?: {
-    region: string;
+    region: number;
     coordinates: number[];
   };
 }
@@ -49,7 +49,7 @@ export interface IEventUpdateInfoForm {
 
   startDate: ZonedDateTime;
   endDate: ZonedDateTime;
-  region: string;
+  region: number;
   latitude: string;
   longitude: string;
 }
@@ -66,7 +66,7 @@ export interface IEventCreateForm {
   isOnline: "true" | "false";
   isFeatured: "true" | "false";
 
-  region: string;
+  region: number;
   latitude: string;
   longitude: string;
 
@@ -87,7 +87,7 @@ export interface IEventCreatePayload {
   endDate: string;
 
   location: {
-    region: string;
+    region: number;
     coordinates: number[];
   };
 
