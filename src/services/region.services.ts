@@ -3,7 +3,7 @@ import endpoint from "./endpoint.constant";
 
 const regionServices = {
   getRegion: () => instance.get(`${endpoint.REGION}?`),
-  getRegencyById: (id: string) =>
+  getRegencyById: (id: number) =>
     instance.get(`${endpoint.REGION}/${id}/regency`),
 };
 

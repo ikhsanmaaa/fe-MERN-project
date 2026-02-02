@@ -10,20 +10,10 @@ import { COLUMN_LIST_CATEGORY } from "./categoryConstant";
 import AddCategoryModal from "../../../../ui/AddCategoryModal/AddCategoryModal";
 import DeleteCategoryModal from "../../../../ui/DeleteCategoryModal/DeleteCategoryModal";
 import Image from "next/image";
-import useChangeUrl from "@/hooks/useChangeUrl";
 import DropdownAction from "@/ui/DropdownAction/DropdownAction";
 
 const Category = () => {
   const router = useRouter();
-  const {
-    currentPage,
-    currentLimit,
-
-    handleChangeLimit,
-    handleChangePage,
-    handleSearch,
-    handleClearSearch,
-  } = useChangeUrl();
 
   const {
     dataCategory,
@@ -55,6 +45,7 @@ const Category = () => {
         case "actions":
           return (
             <DropdownAction
+              labelButtonDetails="Details"
               onPressButtonDetail={() =>
                 router.push(`/admin/category/${category._id}`)
               }
@@ -76,17 +67,11 @@ const Category = () => {
     <section>
       <DataTable
         columns={COLUMN_LIST_CATEGORY}
-        currentPage={Number(currentPage)}
         data={dataCategory?.data || []}
         emptyContent="Category is empty"
         isLoading={isLoadingCategory || isRefetchingCategory}
-        limit={String(currentLimit)}
         totalPages={dataCategory?.pagination.totalPages}
         renderCell={renderCell}
-        onChangePage={handleChangePage}
-        onChangeLimit={handleChangeLimit}
-        onChangeSearch={handleSearch}
-        onClearSearch={handleClearSearch}
         buttonTopContentLabel="Create Category"
         onClickButtonTopContent={addCategoryModal.onOpen}
       />

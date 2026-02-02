@@ -12,11 +12,11 @@ const eventServices = {
   getEventById: (id: string) => instance.get(`${endpoint.EVENT}/${id}`),
   addEvent: (payload: IEventCreatePayload) =>
     instance.post(endpoint.EVENT, payload),
-  searchLocationByRegency: (name: string) =>
-    instance.get(`${endpoint.REGION}-search?name=${name}`),
   deleteEvent: (id: string) => instance.delete(`${endpoint.EVENT}/${id}`),
   updateEvent: (id: string, payload: IEventUpdateInfoPayload) =>
     instance.put(`${endpoint.EVENT}/${id}`, payload),
+  searchLocationByRegency: (name: string) =>
+    instance.get(`${endpoint.REGION}-search?name=${name}`),
   updateEventBanner: (id: string, payload: IEventUpdateBannerPayload) => {
     const formData = new FormData();
     formData.append("banner", payload.banner);

@@ -26,7 +26,6 @@ const useCoverTab = () => {
     formState: { errors: errorsUpdateCover },
     reset: resetUpdateCover,
     watch,
-    setValue,
   } = useForm<IEventBannerForm>({
     resolver: yupResolver(schemaUpdateCover),
   });

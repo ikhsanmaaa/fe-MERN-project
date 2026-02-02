@@ -37,8 +37,14 @@ const schema = yup.object({
     .oneOf(["true", "false"])
     .required("Please select featured"),
 
+  isPublish: yup
+    .mixed<"true" | "false">()
+    .oneOf(["true", "false"])
+    .required("Please select featured"),
+
+  address: yup.string().required("Please input adress"),
   region: yup
-    .number()
+    .string()
     .typeError("Please select region")
     .required("Please select region"),
 
@@ -147,11 +153,13 @@ const useAddEventModal = () => {
 
       isFeatured: data.isFeatured === "true",
       isOnline: data.isOnline === "true",
+      isPublish: data.isOnline === "true",
 
       startDate: toDateStandard(data.startDate)!,
       endDate: toDateStandard(data.endDate, true)!,
 
       location: {
+        address: String(data.address),
         region: Number(data.region),
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },

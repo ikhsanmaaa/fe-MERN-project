@@ -11,7 +11,6 @@ import {
 import useUpdateEvent from "./useUpdateEvent";
 import { addToast } from "@heroui/react";
 import { toDateStandard } from "@/utils/date";
-import eventServices from "@/services/events.services";
 import regionServices from "@/services/region.services";
 
 const useDetailEvent = () => {
@@ -103,7 +102,8 @@ const useDetailEvent = () => {
       endDate: toDateStandard(data.endDate, true)!,
 
       location: {
-        region: data.region,
+        address: data.address,
+        region: Number(data.region),
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },
     };

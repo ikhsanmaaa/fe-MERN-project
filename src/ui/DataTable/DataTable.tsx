@@ -1,4 +1,5 @@
 import { LIMIT_LIST } from "@/constants/list.constants";
+import useChangeUrl from "@/hooks/useChangeUrl";
 import { cn } from "@/utils/cn";
 import {
   Button,
@@ -20,53 +21,56 @@ import { CiSearch } from "react-icons/ci";
 interface PropTypes {
   buttonTopContentLabel?: string;
   columns: Record<string, unknown>[];
-  currentPage: number;
   data: Record<string, unknown>[];
   emptyContent: string;
   isLoading?: boolean;
-  limit: string;
-  onChangeSearch: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChangeLimit: (e: ChangeEvent<HTMLSelectElement>) => void;
-  onChangePage: (page: number) => void;
-  onClearSearch: () => void;
   onClickButtonTopContent?: () => void;
-  onClickButtonDelete?: () => void;
   renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode;
   totalPages: number;
+  showLimit?: boolean;
+  showSearch?: boolean;
 }
 
 const DataTable = (props: PropTypes) => {
   const {
     buttonTopContentLabel,
     columns,
-    currentPage,
     data,
     emptyContent,
     isLoading,
-    limit,
-    onChangeLimit,
-    onChangePage,
-    onChangeSearch,
-    onClearSearch,
     onClickButtonTopContent,
-    onClickButtonDelete,
     renderCell,
+    showLimit = true,
+    showSearch = true,
     totalPages,
   } = props;
+
+  const {
+    currentPage,
+    currentLimit,
+
+    handleSearch,
+    handleClearSearch,
+    handleChangePage,
+    handleChangeLimit,
+  } = useChangeUrl();
+
   const TopContent = useMemo(() => {
     return (
       <div className="flex flex-col-reverse items-start justify-between gap-x-4 lg:flex-row lg:items-center">
-        <Input
-          isClearable
-          className="w-full "
-          placeholder="search by name"
-          startContent={<CiSearch />}
-          classNames={{
-            label: "hidden",
-          }}
-          onClear={onClearSearch}
-          onChange={onChangeSearch}
-        />
+        {showSearch && (
+          <Input
+            isClearable
+            className="w-full "
+            placeholder="search by name"
+            startContent={<CiSearch />}
+            classNames={{
+              label: "hidden",
+            }}
+            onClear={handleClearSearch}
+            onChange={handleSearch}
+          />
+        )}
         {buttonTopContentLabel && (
           <Button color="danger" onPress={onClickButtonTopContent}>
             {buttonTopContentLabel}
@@ -76,8 +80,8 @@ const DataTable = (props: PropTypes) => {
     );
   }, [
     buttonTopContentLabel,
-    onClearSearch,
-    onChangeSearch,
+    handleClearSearch,
+    handleSearch,
     onClickButtonTopContent,
   ]);
 
@@ -85,20 +89,22 @@ const DataTable = (props: PropTypes) => {
     return (
       <div className="flex items-center justify-between px-2 py-2">
         <div className="flex items-center gap-2">
-          <Select
-            className="w-fit min-w-[200px] "
-            size="md"
-            selectedKeys={[String(limit)]}
-            selectionMode="single"
-            onChange={onChangeLimit}
-            startContent={<p className="text-small">Show:</p>}
-            items={LIMIT_LIST}
-            disallowEmptySelection
-          >
-            {(item) => (
-              <SelectItem key={String(item.value)}>{item.label}</SelectItem>
-            )}
-          </Select>
+          {showLimit && (
+            <Select
+              className="w-fit min-w-[200px] "
+              size="md"
+              selectedKeys={[String(currentLimit)]}
+              selectionMode="single"
+              onChange={handleChangeLimit}
+              startContent={<p className="text-small">Show:</p>}
+              items={LIMIT_LIST}
+              disallowEmptySelection
+            >
+              {(item) => (
+                <SelectItem key={String(item.value)}>{item.label}</SelectItem>
+              )}
+            </Select>
+          )}
         </div>
         {totalPages > 1 && (
           <Pagination
@@ -107,13 +113,19 @@ const DataTable = (props: PropTypes) => {
             color="danger"
             page={currentPage}
             total={totalPages}
-            onChange={onChangePage}
+            onChange={handleChangePage}
             loop
           />
         )}
       </div>
     );
-  }, [limit, currentPage, onChangeLimit, onChangePage, totalPages]);
+  }, [
+    currentLimit,
+    currentPage,
+    handleChangeLimit,
+    handleChangePage,
+    totalPages,
+  ]);
 
   return (
     <Table

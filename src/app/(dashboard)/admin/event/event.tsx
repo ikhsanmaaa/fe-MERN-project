@@ -16,15 +16,6 @@ import DeleteEventModal from "@/ui/DeleteEventModal/DeleteEventModal";
 const Event = () => {
   const router = useRouter();
   const {
-    currentPage,
-    currentLimit,
-
-    handleChangeLimit,
-    handleChangePage,
-    handleSearch,
-    handleClearSearch,
-  } = useChangeUrl();
-  const {
     dataEvent,
     isLoadingEvent,
     isRefetchingEvent,
@@ -62,10 +53,20 @@ const Event = () => {
               {cellValue === true ? "Online" : "not Online"}
             </Chip>
           );
-
+        case "isPublish":
+          return (
+            <Chip
+              color={cellValue ? "success" : "warning"}
+              size="sm"
+              variant="flat"
+            >
+              {cellValue === true ? "Published" : "not Published"}
+            </Chip>
+          );
         case "actions":
           return (
             <DropdownAction
+              labelButtonDetails="Details"
               onPressButtonDetail={() =>
                 router.push(`/admin/event/${event._id}`)
               }
@@ -87,17 +88,11 @@ const Event = () => {
     <section>
       <DataTable
         columns={COLUMN_LIST_EVENT}
-        currentPage={Number(currentPage)}
         data={dataEvent?.data || []}
         emptyContent="Event is empty"
         isLoading={isLoadingEvent || isRefetchingEvent}
-        limit={String(currentLimit)}
         totalPages={dataEvent?.pagination.totalPages}
         renderCell={renderCell}
-        onChangePage={handleChangePage}
-        onChangeLimit={handleChangeLimit}
-        onChangeSearch={handleSearch}
-        onClearSearch={handleClearSearch}
         buttonTopContentLabel="Create Event"
         onClickButtonTopContent={addEventModal.onOpen}
       />

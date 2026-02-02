@@ -7,11 +7,13 @@ export interface IEvent {
   category: string;
   isFeatured: boolean;
   isOnline: boolean;
+  isPublish: boolean;
   description: string;
   startDate: string;
   endDate: string;
   location?: {
-    region: number;
+    address: string;
+    region: string;
     coordinates: number[];
   };
   banner: string | FileList;
@@ -26,11 +28,12 @@ export interface IEventUpdateInfoPayload {
 
   isOnline?: boolean;
   isFeatured?: boolean;
-
+  isPublish?: boolean;
   startDate?: string;
   endDate?: string;
 
   location?: {
+    address: string;
     region: number;
     coordinates: number[];
   };
@@ -46,10 +49,13 @@ export interface IEventUpdateInfoForm {
 
   isOnline: "true" | "false";
   isFeatured: "true" | "false";
+  isPublish: "true" | "false";
 
   startDate: ZonedDateTime;
   endDate: ZonedDateTime;
-  region: number;
+
+  address: string;
+  region: string;
   latitude: string;
   longitude: string;
 }
@@ -65,8 +71,10 @@ export interface IEventCreateForm {
 
   isOnline: "true" | "false";
   isFeatured: "true" | "false";
+  isPublish: "true" | "false";
 
-  region: number;
+  address: string;
+  region: string;
   latitude: string;
   longitude: string;
 
@@ -82,11 +90,13 @@ export interface IEventCreatePayload {
 
   isOnline: boolean;
   isFeatured: boolean;
+  isPublish: boolean;
 
   startDate: string;
   endDate: string;
 
   location: {
+    address: string;
     region: number;
     coordinates: number[];
   };

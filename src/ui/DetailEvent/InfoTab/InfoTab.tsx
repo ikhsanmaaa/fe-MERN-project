@@ -27,7 +27,6 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { DELAY } from "@/constants/list.constants";
 import { useQuery } from "@tanstack/react-query";
 import eventServices from "@/services/events.services";
-import regionServices from "@/services/region.services";
 
 interface PropTypes {
   dataEvent: IEventCreatePayload;
@@ -45,7 +44,6 @@ const InfoTab = (props: PropTypes) => {
     isPendingUpdate,
     isSuccessUpdate,
     dataDefaultRegion,
-    isPendingDefaultRegion,
   } = props;
 
   const [searchRegency, setSearchRegency] = useState("");
@@ -61,6 +59,9 @@ const InfoTab = (props: PropTypes) => {
     dataCategory,
   } = useInfoTab();
 
+  const start = new Date(dataEvent.startDate);
+  const end = new Date(dataEvent.endDate);
+
   useEffect(() => {
     setValueUpdateInfoEvent("name", `${dataEvent.name}`);
     setValueUpdateInfoEvent("description", `${dataEvent.description}`);
@@ -68,20 +69,22 @@ const InfoTab = (props: PropTypes) => {
     setValueUpdateInfoEvent("category", `${dataEvent.category}`);
     setValueUpdateInfoEvent(
       "startDate",
-      parseAbsoluteToLocal(dataEvent.startDate.replace(" ", "T") + "Z"),
+      parseAbsoluteToLocal(start.toISOString()),
     );
 
-    setValueUpdateInfoEvent(
-      "endDate",
-      parseAbsoluteToLocal(dataEvent.endDate.replace(" ", "T") + "Z"),
-    );
+    setValueUpdateInfoEvent("endDate", parseAbsoluteToLocal(end.toISOString()));
     setValueUpdateInfoEvent("isOnline", dataEvent.isOnline ? "true" : "false");
     setValueUpdateInfoEvent(
       "isFeatured",
       dataEvent.isFeatured ? "true" : "false",
     );
-    setValueUpdateInfoEvent("description", `${dataEvent.description}`);
-    setValueUpdateInfoEvent("region", `${dataEvent.location.region}`);
+    setValueUpdateInfoEvent(
+      "isPublish",
+      dataEvent.isFeatured ? "true" : "false",
+    );
+
+    setValueUpdateInfoEvent("address", `${dataEvent.location.address}`);
+    setValueUpdateInfoEvent("region", String(dataEvent.location.region));
     setValueUpdateInfoEvent("latitude", `${dataEvent.location.coordinates[0]}`);
     setValueUpdateInfoEvent(
       "longitude",
@@ -232,8 +235,8 @@ const InfoTab = (props: PropTypes) => {
                 errorMessage={errorsUpdateInfoEvent.isOnline?.message}
                 disallowEmptySelection
               >
-                <SelectItem key="true">Publish</SelectItem>
-                <SelectItem key="false">Draft</SelectItem>
+                <SelectItem key="true">Online</SelectItem>
+                <SelectItem key="false">Not Online</SelectItem>
               </Select>
             )}
           />
@@ -256,6 +259,27 @@ const InfoTab = (props: PropTypes) => {
               </Select>
             )}
           />
+
+          <Controller
+            name="isPublish"
+            control={controlUpdateInfoEvent}
+            render={({ field }) => (
+              <Select
+                {...field}
+                selectedKeys={[field.value]}
+                variant="bordered"
+                label="Publish"
+                labelPlacement="inside"
+                isInvalid={errorsUpdateInfoEvent.isPublish !== undefined}
+                errorMessage={errorsUpdateInfoEvent.isPublish?.message}
+                disallowEmptySelection
+              >
+                <SelectItem key="true">Publish</SelectItem>
+                <SelectItem key="false">Draft</SelectItem>
+              </Select>
+            )}
+          />
+
           <Controller
             name="description"
             control={controlUpdateInfoEvent}
@@ -273,6 +297,22 @@ const InfoTab = (props: PropTypes) => {
           />
 
           <p className="text-sm font-bold">Location</p>
+
+          <Controller
+            name="address"
+            control={controlUpdateInfoEvent}
+            render={({ field }) => (
+              <Input
+                {...field}
+                variant="bordered"
+                label="Address"
+                labelPlacement="inside"
+                type="text"
+                isInvalid={errorsUpdateInfoEvent.address !== undefined}
+                errorMessage={errorsUpdateInfoEvent.address?.message}
+              />
+            )}
+          />
 
           <Controller
             key={dataDefaultRegion ?? "loading"}

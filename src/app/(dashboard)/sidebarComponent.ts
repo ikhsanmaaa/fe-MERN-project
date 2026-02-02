@@ -50,7 +50,7 @@ export const adminItems = [
   {
     key: "banner",
     label: "Banner",
-    href: "/admin/banner",
+    href: "/admin/banners",
     icon: CiBookmark,
   },
   {

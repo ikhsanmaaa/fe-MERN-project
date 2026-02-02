@@ -26,6 +26,12 @@ const schemaUpdateInfoEvent = yup.object({
     .oneOf(["true", "false"])
     .required("Please select featured"),
 
+  isPublish: yup
+    .mixed<"true" | "false">()
+    .oneOf(["true", "false"])
+    .required("Please select featured"),
+
+  address: yup.string().required("Please input address"),
   region: yup.mixed<string>().required("Please select region"),
 
   latitude: yup.string().required("Please input latitude coordinate"),

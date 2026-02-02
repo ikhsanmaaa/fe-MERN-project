@@ -12,10 +12,12 @@ import { CiMenuKebab } from "react-icons/ci";
 interface PropTypes {
   onPressButtonDetail: () => void;
   onPressButtonDelete: () => void;
+  labelButtonDetails: string;
 }
 
 const DropdownAction = (props: PropTypes) => {
-  const { onPressButtonDetail, onPressButtonDelete } = props;
+  const { onPressButtonDetail, onPressButtonDelete, labelButtonDetails } =
+    props;
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -25,13 +27,12 @@ const DropdownAction = (props: PropTypes) => {
       </DropdownTrigger>
       <DropdownMenu>
         <DropdownItem key="detail event button" onPress={onPressButtonDetail}>
-          Details
+          {String(labelButtonDetails)}
         </DropdownItem>
         <DropdownItem
           key="delete"
           className="text-danger-500"
           onPress={onPressButtonDelete}
-          // deleteCategoryModal.onOpen();
         >
           Delete
         </DropdownItem>

@@ -1,10 +1,11 @@
 const COLUMN_LIST_EVENT = [
   { name: "BANNER", uid: "banner" },
   { name: "NAME", uid: "name" },
-  { name: "Start Date", uid: "startDate" },
-  { name: "End Date", uid: "endDate" },
-  { name: "ACTIONS", uid: "actions" },
+  { name: "START DATE", uid: "startDate" },
+  { name: "END DATE", uid: "endDate" },
   { name: "STATUS", uid: "isOnline" },
+  { name: "PUBLISH", uid: "isPublish" },
+  { name: "ACTIONS", uid: "actions" },
 ];
 
 export { COLUMN_LIST_EVENT };

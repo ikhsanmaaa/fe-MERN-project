@@ -5,6 +5,7 @@ import useDetailEvent from "./useDetailEvent";
 import CoverTab from "./CoverTab/CoverTab";
 import InfoTabSkeleton from "../SkeletonLoading/InfoTabSkeleton";
 import CoverTabSkeleton from "../SkeletonLoading/CoverTabSkeleton";
+import TicketTab from "./TicketTab/TicketTab";
 
 const DetailEvent = () => {
   const {
@@ -40,7 +41,7 @@ const DetailEvent = () => {
           <InfoTabSkeleton />
         ) : (
           <InfoTab
-            dataDefaultRegion={dataDefaultRegion?.data?.data[0].name}
+            dataDefaultRegion={dataDefaultRegion?.data?.data?.[0]?.name}
             isPendingDefaultRegion={isPendingDefaultRegion}
             dataEvent={dataEvent}
             onUpdate={handleUploadEvent}
@@ -48,6 +49,9 @@ const DetailEvent = () => {
             isSuccessUpdate={isSuccessMutateUpdateEvent}
           />
         )}
+      </Tab>
+      <Tab key="Ticket" title="Ticket">
+        <TicketTab />
       </Tab>
     </Tabs>
   );

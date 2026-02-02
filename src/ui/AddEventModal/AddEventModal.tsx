@@ -202,8 +202,8 @@ const AddEventModal = (props: PropTypes) => {
                       errorMessage={errors.isOnline?.message}
                       disallowEmptySelection
                     >
-                      <SelectItem key="true">Publish</SelectItem>
-                      <SelectItem key="false">Draft</SelectItem>
+                      <SelectItem key="true">Online</SelectItem>
+                      <SelectItem key="false">Not Online</SelectItem>
                     </Select>
                   )}
                 />
@@ -226,6 +226,24 @@ const AddEventModal = (props: PropTypes) => {
                   )}
                 />
                 <Controller
+                  name="isPublish"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      variant="bordered"
+                      label="Publish"
+                      labelPlacement="inside"
+                      isInvalid={errors.isPublish !== undefined}
+                      errorMessage={errors.isPublish?.message}
+                      disallowEmptySelection
+                    >
+                      <SelectItem key="true">Publish</SelectItem>
+                      <SelectItem key="false">Draft</SelectItem>
+                    </Select>
+                  )}
+                />
+                <Controller
                   name="description"
                   control={control}
                   render={({ field }) => (
@@ -243,6 +261,23 @@ const AddEventModal = (props: PropTypes) => {
               </div>
 
               <p className="text-sm font-bold">Location</p>
+
+              <Controller
+                name="address"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    variant="bordered"
+                    label="Address"
+                    labelPlacement="inside"
+                    type="text"
+                    isInvalid={errors.address !== undefined}
+                    errorMessage={errors.address?.message}
+                  />
+                )}
+              />
+
               <Controller
                 name="region"
                 control={control}
