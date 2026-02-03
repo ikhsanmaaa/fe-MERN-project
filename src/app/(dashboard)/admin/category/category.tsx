@@ -7,8 +7,8 @@ import { Key, ReactNode, useCallback } from "react";
 
 import useCategory from "./useCategory";
 import { COLUMN_LIST_CATEGORY } from "./categoryConstant";
-import AddCategoryModal from "../../../../ui/AddCategoryModal/AddCategoryModal";
-import DeleteCategoryModal from "../../../../ui/DeleteCategoryModal/DeleteCategoryModal";
+import AddCategoryModal from "../../../../ui/Category/AddCategoryModal/AddCategoryModal";
+import DeleteCategoryModal from "../../../../ui/Category/DeleteCategoryModal/DeleteCategoryModal";
 import Image from "next/image";
 import DropdownAction from "@/ui/DropdownAction/DropdownAction";
 

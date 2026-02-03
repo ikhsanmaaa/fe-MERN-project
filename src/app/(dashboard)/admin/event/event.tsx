@@ -10,8 +10,8 @@ import useChangeUrl from "@/hooks/useChangeUrl";
 import useEvent from "./useEvent";
 import { COLUMN_LIST_EVENT } from "./event.constants";
 import DropdownAction from "@/ui/DropdownAction/DropdownAction";
-import AddEventModal from "@/ui/AddEventModal/AddEventModal";
-import DeleteEventModal from "@/ui/DeleteEventModal/DeleteEventModal";
+import AddEventModal from "@/ui/Event/AddEventModal/AddEventModal";
+import DeleteEventModal from "@/ui/Event/DeleteEventModal/DeleteEventModal";
 
 const Event = () => {
   const router = useRouter();

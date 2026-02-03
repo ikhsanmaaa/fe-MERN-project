@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 import PageHeader from "@/ui/PageHeader/PageHeader";
-import DetailBanner from "@/ui/DetailBanner/DetailBanner";
+import DetailBanner from "@/ui/Banner/DetailBanner/DetailBanner";
 export const metadata: Metadata = {
   title: "Banner",
   description: "Detail of Banner selected",

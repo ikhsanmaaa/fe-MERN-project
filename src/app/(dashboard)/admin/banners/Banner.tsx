@@ -9,8 +9,8 @@ import Image from "next/image";
 import DropdownAction from "@/ui/DropdownAction/DropdownAction";
 import useBanner from "./useBanner";
 import { COLUMN_LIST_Banner } from "./bannerConstant";
-import AddBannerModal from "@/ui/AddBannerModal/AddBannerModal";
-import DeleteBannerModal from "@/ui/DeleteBannerModal/DeleteBannerModal";
+import AddBannerModal from "@/ui/Banner/AddBannerModal/AddBannerModal";
+import DeleteBannerModal from "@/ui/Banner/DeleteBannerModal/DeleteBannerModal";
 
 const Banner = () => {
   const router = useRouter();

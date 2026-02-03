@@ -1,21 +1,14 @@
-import ButtonHomePage from "@/ui/ButtonHomePage/buttonHomePage";
+import Home from "@/ui/LandingPage/Home";
+import LandingPageLayout from "@/ui/LandingPage/LandingPageLayout";
 import { Metadata } from "next";
-import Link from "next/link";
 export const metadata: Metadata = {
   title: "Home",
   description: "Home",
 };
-export default function Home() {
+export default function HomePage() {
   return (
-    <>
-      <div className="flex justify-evenly">
-        <Link href={"/auth/login"}>
-          <ButtonHomePage buttonName="login" />
-        </Link>
-        <Link href={"/admin/dashboard"}>
-          <ButtonHomePage buttonName="dashboard admin" />
-        </Link>
-      </div>
-    </>
+    <LandingPageLayout>
+      <Home />
+    </LandingPageLayout>
   );
 }
