@@ -11,7 +11,12 @@ import {
 import useInfoTab from "./useInfoTab";
 import { Controller } from "react-hook-form";
 import { useEffect } from "react";
-import { IBannersPayload, IBannersUpdateInfo } from "@/types/Banner";
+import {
+  IBannersForm,
+  IBannersPayload,
+  IBannersUpdateInfo,
+  IBannersUpdatePayload,
+} from "@/types/Banner";
 
 interface PropTypes {
   dataBanner: IBannersPayload;

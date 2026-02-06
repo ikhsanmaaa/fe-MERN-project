@@ -14,6 +14,7 @@ import {
   ZonedDateTime,
 } from "@internationalized/date";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -56,7 +57,7 @@ const schema = yup.object({
 
 const useAddEventModal = () => {
   const { handleDeleteFile, handleUploadFile } = useMediaHandling();
-
+  const [searchRegency, setSearchRegency] = useState("");
   const {
     control,
     handleSubmit: handleSubmitForm,
@@ -78,7 +79,7 @@ const useAddEventModal = () => {
 
   const handleOnClose = (onClose: () => void) => {
     handleDeleteFile(fileUrl, () => {
-      reset();
+      (setSearchRegency(""), reset());
       onClose();
     });
   };

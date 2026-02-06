@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Controller } from "react-hook-form";
 import { useEffect } from "react";
 import useImageTab from "./useImageTab";
-import { IBannerUpdateIcon } from "@/types/Banner";
+import { IBannersUpdateInfo, IBannerUpdateIcon } from "@/types/Banner";
 
 interface PropTypes {
   currentImage: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { addToast } from "@heroui/react";
 
@@ -25,7 +25,7 @@ export default function AuthSessionGuard({
         timeout: 4000,
         shouldShowTimeoutProgress: true,
       });
-
+      signOut();
       router.replace("/auth/login");
     }
   }, [status, router]);

@@ -19,7 +19,7 @@ export interface IEvent {
   banner: string | FileList;
 }
 
-export interface IEventUpdateInfoPayload {
+export interface IEventUpdatePayload {
   name?: string;
   _id?: string;
   slug?: string;
@@ -37,6 +37,7 @@ export interface IEventUpdateInfoPayload {
     region: number;
     coordinates: number[];
   };
+  banner?: string | FileList;
 }
 
 export interface IEventUpdateInfoForm {
@@ -104,10 +105,6 @@ export interface IEventCreatePayload {
   banner: File | string;
 }
 
-export interface IEventUpdateBannerPayload {
-  banner: File;
-}
-
 export interface IEventBannerForm {
-  banner: FileList;
+  banner: string | FileList;
 }

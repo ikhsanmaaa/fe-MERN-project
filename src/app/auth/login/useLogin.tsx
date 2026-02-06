@@ -23,29 +23,37 @@ function FormLogin() {
   const searchParams = useSearchParams();
   const callbackUrl: string =
     (searchParams.get("callbackUrl") as string) || "/";
+
   const loginService = async (payload: ILogin) => {
-    const result = await signIn("credentials", {
+    const res = await signIn("credentials", {
       ...payload,
       redirect: false,
       callbackUrl,
     });
-    if (result?.error && result?.status === 401) {
-      throw new Error("Login Failed");
+
+    if (!res?.ok) {
+      throw new Error(res?.error || "Gagal Login");
     }
+
+    return res;
   };
 
   const { mutate: mutateLogin, isPending: isPendingLogin } = useMutation({
     mutationFn: loginService,
-    onError(errors) {
+    onError(error: any) {
+      const message =
+        error?.response?.data?.message || error?.message || "Login gagal";
+
       addToast({
         title: "Login failed",
-        description: errors.message,
+        description: message,
         color: "danger",
         timeout: 3000,
         shouldShowTimeoutProgress: true,
       });
+
       setError("root", {
-        message: errors.message,
+        message,
       });
     },
     onSuccess: () => {
@@ -78,10 +86,6 @@ function FormLogin() {
       className="flex w-full flex-col gap-2"
       onSubmit={handleSubmit(handleLogin)}
     >
-      {errors.root?.message && (
-        <p className="text-sm text-danger">{errors.root.message}</p>
-      )}
-
       <Controller
         name="identifier"
         control={control}

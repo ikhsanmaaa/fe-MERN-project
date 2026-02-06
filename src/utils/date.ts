@@ -10,4 +10,19 @@ const toDateStandard = (date: any, isEndDate = false) => {
   return `${year}-${month}-${day} ${time}`;
 };
 
-export { toDateStandard };
+const convertTime = (isoDate: string) => {
+  const dateObject = new Date(isoDate);
+
+  const date = dateObject.toLocaleString("id-ID", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Jakarta",
+  });
+
+  return `${date} WIB`;
+};
+
+export { toDateStandard, convertTime };

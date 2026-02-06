@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import {
   IEventBannerForm,
   IEventUpdateInfoForm,
-  IEventUpdateInfoPayload,
+  IEventUpdatePayload,
 } from "@/types/Event";
 import useUpdateEvent from "./useUpdateEvent";
 import { addToast } from "@heroui/react";
@@ -89,7 +89,7 @@ const useDetailEvent = () => {
   });
 
   const handleUploadEvent = (data: IEventUpdateInfoForm) => {
-    const payload: IEventUpdateInfoPayload = {
+    const payload: IEventUpdatePayload = {
       name: data.name,
       slug: data.slug,
       category: data.category,
@@ -112,12 +112,7 @@ const useDetailEvent = () => {
   };
 
   const handleUploadEventBanner = (data: IEventBannerForm) => {
-    const file = data.banner?.[0];
-    if (!file) return;
-
-    mutateUpdateEventbanner({
-      banner: file,
-    });
+    mutateUpdateEventbanner(data);
   };
 
   const { data: dataDefaultRegion, isPending: isPendingDefaultRegion } =

@@ -12,7 +12,10 @@ import * as yup from "yup";
 
 const schema = yup.object().shape({
   title: yup.string().required("Please input title of banner"),
-  isShow: yup.string().required("Please select publish of banner"),
+  isShow: yup
+    .mixed<"true" | "false">()
+    .oneOf(["true", "false"])
+    .required("Please select status"),
   image: yup.mixed<FileList | string>().required("Please input banner image"),
 });
 
@@ -94,7 +97,14 @@ const useAddBannerModal = () => {
     },
   });
 
-  const handleAddBanner = (data: IBannersPayload) => mutateAddBanner(data);
+  const handleAddBanner = (data: IBannersForm) => {
+    const payload: IBannersPayload = {
+      title: data.title,
+      image: data.image,
+      isShow: data.isShow === "true",
+    };
+    mutateAddBanner(payload);
+  };
 
   return {
     control,

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Key, ReactNode, useCallback } from "react";
 
 import Image from "next/image";
-import useChangeUrl from "@/hooks/useChangeUrl";
 import useEvent from "./useEvent";
 import { COLUMN_LIST_EVENT } from "./event.constants";
 import DropdownAction from "@/ui/DropdownAction/DropdownAction";
@@ -15,6 +14,7 @@ import DeleteEventModal from "@/ui/Event/DeleteEventModal/DeleteEventModal";
 
 const Event = () => {
   const router = useRouter();
+
   const {
     dataEvent,
     isLoadingEvent,

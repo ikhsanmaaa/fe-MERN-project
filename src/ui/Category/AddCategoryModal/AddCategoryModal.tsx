@@ -134,6 +134,12 @@ const AddCategoryModal = (props: PropTypes) => {
               disabled={
                 disabledSubmit || isPendingMutateAddCategory || !preview
               }
+              className="
+    disabled:bg-gray-300
+    disabled:text-gray-500
+    disabled:border-gray-300
+    disabled:cursor-not-allowed
+  "
             >
               {isPendingMutateAddCategory ? (
                 <Spinner size="sm" color="white" />

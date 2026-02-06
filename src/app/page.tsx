@@ -1,4 +1,4 @@
-import Home from "@/ui/LandingPage/Home";
+import Home from "@/ui/LandingPage/Home/Home";
 import LandingPageLayout from "@/ui/LandingPage/LandingPageLayout";
 import { Metadata } from "next";
 export const metadata: Metadata = {

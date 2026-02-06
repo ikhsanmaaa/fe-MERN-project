@@ -3,8 +3,8 @@ import { Tab, Tabs } from "@heroui/react";
 import IconTab from "./IconTab/IconTab";
 import InfoTab from "./InfoTab/InfoTab";
 import useDetailCategory from "./useDetailCategory";
-import CoverTabSkeleton from "../SkeletonLoading/CoverTabSkeleton";
-import InfoTabSkeleton from "../SkeletonLoading/InfoTabSkeleton";
+import CoverTabSkeleton from "@/ui/SkeletonLoading/CoverTabSkeleton";
+import InfoTabSkeleton from "@/ui/SkeletonLoading/InfoTabSkeleton";
 
 const DetailCategory = () => {
   const {

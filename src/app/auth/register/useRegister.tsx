@@ -11,6 +11,7 @@ import authServices from "@/services/auth.services";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { cn } from "@/utils/cn";
+import { AxiosError } from "axios";
 
 const registerSchema = yup.object().shape({
   fullName: yup.string().required("Please input your full name"),
@@ -40,14 +41,29 @@ function FormRegister() {
   };
 
   const registerService = async (payload: IRegister) => {
-    const result = await authServices.register(payload);
-    return result;
+    try {
+      const res = await authServices.register(payload);
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(error.response?.data?.message || "Register gagal");
+      }
+
+      throw new Error("Register gagal");
+    }
   };
   const router = useRouter();
 
   const { mutate: mutateRegister, isPending: isPendingRegister } = useMutation({
     mutationFn: registerService,
     onError(errors) {
+      addToast({
+        title: "Failed create an account!",
+        description: errors.message,
+        color: "danger",
+        timeout: 3000,
+        shouldShowTimeoutProgress: true,
+      });
       setError("root", {
         message: errors.message,
       });
@@ -55,7 +71,7 @@ function FormRegister() {
     onSuccess: () => {
       reset();
       addToast({
-        title: "Login success!",
+        title: "success create an account!",
         color: "success",
         timeout: 3000,
         shouldShowTimeoutProgress: true,
@@ -64,7 +80,6 @@ function FormRegister() {
     },
   });
   const handleRegister = (data: IRegister) => {
-    console.log(data);
     mutateRegister(data);
   };
 
@@ -82,11 +97,10 @@ function FormRegister() {
     <form
       className={cn(
         "flex w-80 flex-col gap-4",
-        Object.keys(errors).length > 0 ? "gap-2" : "gap-4"
+        Object.keys(errors).length > 0 ? "gap-2" : "gap-4",
       )}
       onSubmit={handleSubmit(handleRegister)}
     >
-      {errors.root?.message}
       <Controller
         name="fullName"
         control={control}

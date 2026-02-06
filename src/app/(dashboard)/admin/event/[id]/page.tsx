@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 import PageHeader from "@/ui/PageHeader/PageHeader";
-import DetailEvent from "@/ui/DetailEvent/DetailEvent";
+import DetailEvent from "@/ui/Event/DetailEvent/DetailEvent";
 export const metadata: Metadata = {
   title: "Event",
   description: "Detail of event",

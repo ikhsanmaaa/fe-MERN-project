@@ -9,6 +9,17 @@ interface IRegister {
   confirmPassword: string;
 }
 
+interface IUserProfile {
+  _id: string;
+  fullName: string;
+  username: string;
+  email: string;
+  password: string;
+  role: "admin" | "member";
+  profilPicture: string;
+  isActive: boolean;
+}
+
 interface IActivation {
   code: string;
 }
@@ -38,4 +49,5 @@ export type {
   SessionsExtended,
   JWTExtended,
   ILogin,
+  IUserProfile,
 };

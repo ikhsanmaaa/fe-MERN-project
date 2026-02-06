@@ -3,9 +3,9 @@ import { Tab, Tabs } from "@heroui/react";
 import InfoTab from "./InfoTab/InfoTab";
 import useDetailEvent from "./useDetailEvent";
 import CoverTab from "./CoverTab/CoverTab";
-import InfoTabSkeleton from "../SkeletonLoading/InfoTabSkeleton";
-import CoverTabSkeleton from "../SkeletonLoading/CoverTabSkeleton";
 import TicketTab from "./TicketTab/TicketTab";
+import CoverTabSkeleton from "@/ui/SkeletonLoading/CoverTabSkeleton";
+import InfoTabSkeleton from "@/ui/SkeletonLoading/InfoTabSkeleton";
 
 const DetailEvent = () => {
   const {

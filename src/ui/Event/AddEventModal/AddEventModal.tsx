@@ -58,17 +58,7 @@ const AddEventModal = (props: PropTypes) => {
     dataCategory,
   } = useAddEventModal();
 
-  useEffect(() => {
-    if (isSuccessMutateAddEvent) {
-      onClose();
-      refetchEvent();
-    }
-  }, [isSuccessMutateAddEvent]);
-
-  const disabledSubmit =
-    isPendingMutateAddEvent ||
-    isPendingMutateUploadFile ||
-    isPendingMutateDeleteFile;
+  const isBannerValid = typeof preview === "string" && preview.length > 0;
 
   const { data: dataRegion = [], isFetching: isFetchingRegion } = useQuery<
     IRegion[]
@@ -83,7 +73,18 @@ const AddEventModal = (props: PropTypes) => {
     enabled: debouncedSearchRegion.trim() !== "",
   });
 
-  const isBannerValid = typeof preview === "string" && preview.length > 0;
+  useEffect(() => {
+    if (isSuccessMutateAddEvent) {
+      setSearchRegency("");
+      onClose();
+      refetchEvent();
+    }
+  }, [isSuccessMutateAddEvent]);
+
+  const disabledSubmit =
+    isPendingMutateAddEvent ||
+    isPendingMutateUploadFile ||
+    isPendingMutateDeleteFile;
 
   return (
     <Modal
@@ -369,7 +370,9 @@ const AddEventModal = (props: PropTypes) => {
             <Button
               color="danger"
               variant="flat"
-              onPress={() => handleOnClose(onClose)}
+              onPress={() => {
+                handleOnClose(onClose);
+              }}
               disabled={disabledSubmit}
             >
               Cancel
@@ -380,6 +383,12 @@ const AddEventModal = (props: PropTypes) => {
               disabled={
                 disabledSubmit || isPendingMutateAddEvent || !isBannerValid
               }
+              className="
+    disabled:bg-gray-300
+    disabled:text-gray-500
+    disabled:border-gray-300
+    disabled:cursor-not-allowed
+  "
             >
               {isPendingMutateAddEvent ? (
                 <Spinner size="sm" color="white" />

@@ -49,10 +49,23 @@ const IconTab = (props: PropTypes) => {
           onSubmit={handleSubmitUpdateIcon(onUpdate)}
         >
           <div className="flex flex-col gap-2">
-            <p className="text-sm font-medium text-default-700">Current Icon</p>
+            <p className="text-sm font-medium text-default-700">
+              Current Cover
+            </p>
 
-            <Image alt="icon" src={currentIcon} fill className="!relative" />
+            {currentIcon && (
+              <div className="relative w-full h-[220px] rounded-lg overflow-hidden">
+                <Image
+                  alt="icon"
+                  src={`${currentIcon}`}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            )}
           </div>
+
           <Controller
             name="icon"
             control={controlUpdateIcon}

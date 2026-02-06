@@ -3,7 +3,7 @@ import { Button, Card, CardBody, CardHeader, Spinner } from "@heroui/react";
 import Image from "next/image";
 import { Controller } from "react-hook-form";
 import { useEffect } from "react";
-import { IEventBannerForm, IEventUpdateBannerPayload } from "@/types/Event";
+import { IEventBannerForm } from "@/types/Event";
 import useCoverTab from "./useCoverTab";
 
 interface PropTypes {
@@ -54,13 +54,19 @@ const CoverTab = (props: PropTypes) => {
               Current Cover
             </p>
 
-            <Image
-              alt="cover"
-              src={currentCover}
-              fill
-              className="!relative rounded-lg"
-            />
+            {currentCover && (
+              <div className="relative w-full h-[220px] rounded-lg overflow-hidden">
+                <Image
+                  alt="cover"
+                  src={`${currentCover}`}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            )}
           </div>
+
           <Controller
             name="banner"
             control={controlUpdateCover}

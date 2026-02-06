@@ -7,6 +7,7 @@ import {
   IBannersUpdateInfo,
   IBannersUpdatePayload,
   IBannerUpdateIcon,
+  IBannerUpdateIconPayload,
 } from "@/types/Banner";
 import useUpdateBanner from "./useUpdateBanner";
 import bannerServices from "@/services/banner.services";
@@ -59,13 +60,23 @@ const useDetailBanner = () => {
     },
   });
 
-  const handleUploadBanner = (data: IBannersUpdatePayload) =>
+  const handleUploadBannerInfo = (data: IBannersUpdateInfo) => {
+    const payload: IBannersUpdatePayload = {
+      title: data.title,
+      isShow: data.isShow === "true",
+    };
+    mutateUpdateBanner(payload);
+  };
+
+  const handleUploadBanner = (data: IBannerUpdateIcon) => {
     mutateUpdateBanner(data);
+  };
 
   return {
     dataBanner,
     isLoading,
     error,
+    handleUploadBannerInfo,
     handleUploadBanner,
     isPendingMutateUpdateBanner,
     isSuccessMutateUpdateBanner,

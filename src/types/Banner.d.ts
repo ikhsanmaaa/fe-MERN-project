@@ -16,7 +16,7 @@ export interface IBannersForm {
   _id?: string;
   title: string;
   image: string | FileList;
-  isShow: boolean;
+  isShow: "true" | "false";
 }
 
 export interface IBannersUpdateInfo {

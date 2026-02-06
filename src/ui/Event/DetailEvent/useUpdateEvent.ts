@@ -2,16 +2,13 @@
 
 import { useParams } from "next/navigation";
 import EventServices from "@/services/events.services";
-import {
-  IEventUpdateBannerPayload,
-  IEventUpdateInfoPayload,
-} from "@/types/Event";
+import { IEventBannerForm, IEventUpdatePayload } from "@/types/Event";
 
 const useUpdateEvent = () => {
   const params = useParams<{ id: string }>();
   const id = params?.id;
 
-  const updateEvent = async (payload: IEventUpdateInfoPayload) => {
+  const updateEvent = async (payload: IEventUpdatePayload) => {
     if (!id) {
       throw new Error("Event ID not found");
     }
@@ -20,12 +17,12 @@ const useUpdateEvent = () => {
     return data.data;
   };
 
-  const updateEventBanner = async (payload: IEventUpdateBannerPayload) => {
+  const updateEventBanner = async (payload: IEventBannerForm) => {
     if (!id) {
       throw new Error("Event ID not found");
     }
 
-    const { data } = await EventServices.updateEventBanner(id, payload);
+    const { data } = await EventServices.updateEvent(id, payload);
     return data.data;
   };
   return {

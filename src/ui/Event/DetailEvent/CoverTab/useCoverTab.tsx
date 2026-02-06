@@ -9,7 +9,9 @@ import useMediaHandling from "@/hooks/useMediaHandling";
 import { IEventBannerForm } from "@/types/Event";
 
 const schemaUpdateCover = yup.object({
-  banner: yup.mixed<FileList>().required("Please input Cover of Event"),
+  banner: yup
+    .mixed<FileList | string>()
+    .required("Please input Cover of Event"),
 });
 
 const useCoverTab = () => {
@@ -25,38 +27,35 @@ const useCoverTab = () => {
     handleSubmit: handleSubmitUpdateCover,
     formState: { errors: errorsUpdateCover },
     reset: resetUpdateCover,
+    getValues: getValuesUpdateCover,
+    setValue: setValueUpdateCover,
     watch,
   } = useForm<IEventBannerForm>({
     resolver: yupResolver(schemaUpdateCover),
   });
 
-  const [uploadedBannerUrl, setUploadedBannerUrl] = useState<string | null>(
-    null,
-  );
-
   const previewBanner = watch("banner");
+  const fileUrl = getValuesUpdateCover("banner");
 
   const handleDeleteCover = (
     onChange: (files: FileList | undefined) => void,
   ) => {
-    if (!uploadedBannerUrl) return;
-
-    handleDeleteFile(uploadedBannerUrl, () => {
-      onChange(undefined);
-      setUploadedBannerUrl(null);
-      resetUpdateCover();
-    });
+    handleDeleteFile(fileUrl, () => onChange(undefined));
   };
 
   const handleUploadCover = (
     files: FileList,
     onChange: (files: FileList | undefined) => void,
   ) => {
-    handleUploadFile(files, onChange, (fileUrl?: string) => {
-      if (fileUrl) {
-        setUploadedBannerUrl(fileUrl);
-      }
-    });
+    handleUploadFile(
+      files,
+      onChange,
+      (fileUrl: string | string | undefined) => {
+        if (fileUrl) {
+          setValueUpdateCover("banner", fileUrl);
+        }
+      },
+    );
   };
 
   return {
@@ -72,7 +71,6 @@ const useCoverTab = () => {
     resetUpdateCover,
 
     previewBanner,
-    uploadedBannerUrl,
   };
 };
 

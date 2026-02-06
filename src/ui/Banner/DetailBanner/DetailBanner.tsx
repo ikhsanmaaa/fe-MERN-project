@@ -2,9 +2,10 @@
 import { Tab, Tabs } from "@heroui/react";
 import IconTab from "./ImageTab/ImageTab";
 import InfoTab from "./InfoTab/InfoTab";
-import CoverTabSkeleton from "../SkeletonLoading/CoverTabSkeleton";
-import InfoTabSkeleton from "../SkeletonLoading/InfoTabSkeleton";
+
 import useDetailBanner from "./useDetailBanner";
+import InfoTabSkeleton from "@/ui/SkeletonLoading/InfoTabSkeleton";
+import CoverTabSkeleton from "@/ui/SkeletonLoading/CoverTabSkeleton";
 
 const DetailBanner = () => {
   const {
@@ -12,6 +13,7 @@ const DetailBanner = () => {
     isLoading,
     isSuccessMutateUpdateBanner,
     handleUploadBanner,
+    handleUploadBannerInfo,
     isPendingMutateUpdateBanner,
   } = useDetailBanner();
 
@@ -35,7 +37,7 @@ const DetailBanner = () => {
         ) : (
           <InfoTab
             dataBanner={dataBanner}
-            onUpdate={handleUploadBanner}
+            onUpdate={handleUploadBannerInfo}
             isPendingUpdate={isPendingMutateUpdateBanner}
             isSuccessUpdate={isSuccessMutateUpdateBanner}
           />

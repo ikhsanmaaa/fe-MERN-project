@@ -137,6 +137,12 @@ const AddBannerModal = (props: PropTypes) => {
               type="submit"
               onPress={onClose}
               disabled={disabledSubmit || isPendingMutateAddBanner || !preview}
+              className="
+    disabled:bg-gray-300
+    disabled:text-gray-500
+    disabled:border-gray-300
+    disabled:cursor-not-allowed
+  "
             >
               {isPendingMutateAddBanner ? (
                 <Spinner size="sm" color="white" />
