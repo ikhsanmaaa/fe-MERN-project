@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 import PageHeader from "@/ui/PageHeader/PageHeader";
-import DetailCategory from "@/ui/Category/DetailCategory/DetailCategory";
+import DetailCategory from "@/ui/MenuDashboardAdmin/Category/DetailCategory/DetailCategory";
 export const metadata: Metadata = {
   title: "Category",
   description: "List of all categories",
