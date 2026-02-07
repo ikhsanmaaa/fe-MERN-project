@@ -2,19 +2,38 @@
 
 import useChangeUrl from "@/hooks/useChangeUrl";
 import eventServices from "@/services/events.services";
-import { GetParams } from "@/types/getParams";
 import { useQuery } from "@tanstack/react-query";
 
 const useEvent = () => {
-  const { currentPage, currentLimit, currentSearch } = useChangeUrl();
+  const {
+    currentPage,
+    currentLimit,
+    currentCategory,
+    currentIsFeatured,
+    currentIsOnline,
+  } = useChangeUrl();
 
-  const getEvent = async ({ page, limit, search }: GetParams) => {
-    let params = `limit=${limit}&page=${page}`;
+  const getEvent = async () => {
+    const params = new URLSearchParams();
 
-    const res = await eventServices.getEvents(params);
-    const { data } = res;
+    params.set("limit", String(currentLimit));
+    params.set("page", String(currentPage));
+    params.set("isPublish", "true");
 
-    return data;
+    if (currentCategory) {
+      params.set("category", currentCategory);
+    }
+
+    if (currentIsFeatured) {
+      params.set("isFeatured", currentIsFeatured);
+    }
+
+    if (currentIsOnline) {
+      params.set("isOnline", currentIsOnline);
+    }
+
+    const res = await eventServices.getEvents(params.toString());
+    return res.data;
   };
 
   const {
@@ -23,13 +42,16 @@ const useEvent = () => {
     isRefetching: isRefetchingEvent,
     refetch: refetchEvent,
   } = useQuery({
-    queryKey: ["Event", currentPage, currentLimit, currentSearch],
-    queryFn: () =>
-      getEvent({
-        page: currentPage,
-        limit: currentLimit,
-        search: currentSearch,
-      }),
+    queryKey: [
+      "Event",
+      currentPage,
+      currentLimit,
+      currentCategory,
+      currentIsFeatured,
+      currentIsOnline,
+    ],
+    queryFn: getEvent,
+    enabled: true,
   });
 
   return {

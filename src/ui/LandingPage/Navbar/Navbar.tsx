@@ -8,6 +8,8 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
+  Listbox,
+  ListboxItem,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -15,6 +17,7 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
+  Spinner,
 } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,11 +28,23 @@ import { CiSearch } from "react-icons/ci";
 import { signOut, useSession } from "next-auth/react";
 import useLandingPageLayoutNavbar from "../useLandingPageLayoutNavbar";
 import { Fragment } from "react";
+import useChangeUrl from "@/hooks/useChangeUrl";
+import { IEvent } from "@/types/Event";
 
 const LandingPageNavbar = () => {
   const pathname = usePathname();
   const session = useSession();
-  const { dataProfile } = useLandingPageLayoutNavbar();
+  const {
+    dataProfile,
+    dataEventSearch,
+    isLoadingEventSearch,
+    isRefetchingEventSearch,
+    search,
+    setSearch,
+    handleSearch,
+  } = useLandingPageLayoutNavbar();
+
+  const { handleClearSearch } = useChangeUrl();
 
   const isAdmin = dataProfile?.role === "admin";
   return (
@@ -72,15 +87,53 @@ const LandingPageNavbar = () => {
       <NavbarContent justify="end">
         <NavbarMenuToggle className="lg:hidden" />
 
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="hidden lg:flex relative">
           <Input
             isClearable
             className="w-[300px]"
             placeholder="Search Event"
             startContent={<CiSearch />}
-            onClear={() => {}}
-            onChange={() => {}}
+            value={search}
+            onChange={handleSearch}
+            onClear={() => {
+              setSearch("");
+              handleClearSearch();
+            }}
           />
+
+          {search.trim() !== "" && (
+            <div className="absolute w-full right-0 top-12 rounded-xl border bg-white">
+              {isLoadingEventSearch || isRefetchingEventSearch ? (
+                <div className="flex justify-center p-4">
+                  <Spinner size="sm" color="danger" />
+                </div>
+              ) : dataEventSearch?.length ? (
+                <Listbox
+                  items={dataEventSearch}
+                  aria-label="Search result"
+                  className="flex items-center gap-2"
+                >
+                  {(item: IEvent) => (
+                    <ListboxItem key={item._id} href={`/event/${item.slug}`}>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src={`${item.banner}`}
+                          alt={item.name}
+                          width={100}
+                          height={40}
+                          className="w-2/5 rounded-md"
+                        />
+
+                        <p className="w-3/5 text-wrap">{item.name}</p>
+                      </div>
+                    </ListboxItem>
+                  )}
+                </Listbox>
+              ) : (
+                <div className="p-4 text-sm text-gray-500">No results</div>
+              )}
+            </div>
+          )}
         </NavbarItem>
 
         {session.status === "authenticated" ? (

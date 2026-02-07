@@ -1,14 +1,13 @@
 import { LIMIT_LIST } from "@/constants/list.constants";
 import useChangeUrl from "@/hooks/useChangeUrl";
-import { Divider, Pagination, Select, SelectItem } from "@heroui/react";
+import { Pagination, Select, SelectItem } from "@heroui/react";
 
 interface PropTypes {
-  total: number;
   totalPages: number;
 }
 
 const EventFooter = (props: PropTypes) => {
-  const { total, totalPages } = props;
+  const { totalPages } = props;
   const { currentLimit, currentPage, handleChangePage, handleChangeLimit } =
     useChangeUrl();
   return (

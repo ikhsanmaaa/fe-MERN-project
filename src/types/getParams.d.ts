@@ -3,4 +3,11 @@ interface GetParams {
   limit: number;
   search?: string;
 }
-export type { GetParams };
+
+interface GetParamsExplorePage extends GetParams {
+  category?: string;
+  isOnline?: string;
+  isFeatured?: string;
+}
+
+export type { GetParams, GetParamsExplorePage };

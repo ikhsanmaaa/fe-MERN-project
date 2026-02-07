@@ -16,8 +16,13 @@ const HomeCategoryList = (props: PropTypes) => {
         <h1 className="text-2xl font-bold text-danger">Event By Category</h1>
       </CardHeader>
       <CardBody className="mt-4 p-0">
-        <div className="grid auto-cols-[8rem] grid-flow-col gap-4 overflow-x-auto lg:grid-cols-8">
-          {!isLoading
+        <div
+          className=" grid grid-cols-1 gap-4
+    sm:grid-cols-2
+    md:grid-cols-3
+    lg:grid-cols-4"
+        >
+          {!isLoading && Categories
             ? Categories?.map((category) => (
                 <Link
                   key={`category-${category._id}`}
@@ -27,8 +32,8 @@ const HomeCategoryList = (props: PropTypes) => {
                   <Image
                     src={`${category.icon}`}
                     alt={`category-${category.name}`}
-                    width={100}
-                    height={100}
+                    width={1920}
+                    height={600}
                     className="1/2"
                   />
 

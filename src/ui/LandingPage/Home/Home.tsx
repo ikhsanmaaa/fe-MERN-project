@@ -28,6 +28,7 @@ const Home = () => {
         banners={dataBannerPage?.data}
       />
       <HomeEventList
+        urlMore="/event?isFeatured=true"
         title="Featured Event"
         events={dataFeaturedEventPage}
         isLoading={isLoadingFeaturedEventPage}
@@ -45,6 +46,7 @@ const Home = () => {
         />
       </Skeleton>
       <HomeEventList
+        urlMore="/event"
         title="Latest Event"
         events={dataEventHomePage}
         isLoading={isLoadingEventHomePage}
