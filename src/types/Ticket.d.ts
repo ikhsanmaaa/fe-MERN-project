@@ -33,3 +33,9 @@ export interface ITicketsUpdate {
   events?: string;
   quantity: string;
 }
+
+export interface ICart {
+  events: string;
+  ticket: string;
+  quantity: number;
+}

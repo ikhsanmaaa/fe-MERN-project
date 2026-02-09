@@ -1,6 +1,5 @@
 "use client";
 
-import EventServices from "@/services/events.services";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import {
@@ -12,6 +11,7 @@ import useUpdateEvent from "./useUpdateEvent";
 import { addToast } from "@heroui/react";
 import { toDateStandard } from "@/utils/date";
 import regionServices from "@/services/region.services";
+import eventServices from "@/services/events.services";
 
 const useDetailEvent = () => {
   const params = useParams<{ id: string }>();
@@ -19,7 +19,7 @@ const useDetailEvent = () => {
   const { updateEvent, updateEventBanner } = useUpdateEvent();
 
   const getEventById = async (id: string) => {
-    const { data } = await EventServices.getEventById(id);
+    const { data } = await eventServices.getEventById(id);
     return data.data;
   };
 

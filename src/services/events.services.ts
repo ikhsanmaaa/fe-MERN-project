@@ -5,6 +5,8 @@ import { IEventCreatePayload, IEventUpdatePayload } from "@/types/Event";
 const eventServices = {
   getEvents: (params?: string) => instance.get(`${endpoint.EVENT}?${params}`),
   getEventById: (id: string) => instance.get(`${endpoint.EVENT}/${id}`),
+  getEventBySlug: (slug: string) =>
+    instance.get(`${endpoint.EVENT}/${slug}/slug`),
   addEvent: (payload: IEventCreatePayload) =>
     instance.post(endpoint.EVENT, payload),
   deleteEvent: (id: string) => instance.delete(`${endpoint.EVENT}/${id}`),
