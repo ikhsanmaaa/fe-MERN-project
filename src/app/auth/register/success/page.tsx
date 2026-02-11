@@ -1,6 +1,6 @@
+import ButtonSuccess from "@/ui/ButtonSuccess/ButtonSuccess";
 import { Metadata } from "next";
 import Image from "next/image";
-import { ButtonSuccess } from "../useRegister";
 
 export const metadata: Metadata = {
   title: "MERN | Register Success",
@@ -30,7 +30,7 @@ export default function SuccessRegister() {
         <p className="text-xl font-bold text-default-500">
           Check Your Email For Account Activation
         </p>
-        <ButtonSuccess />
+        <ButtonSuccess label="Back to Home" pathname="/" />
       </div>
     </div>
   );

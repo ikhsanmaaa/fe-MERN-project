@@ -146,18 +146,4 @@ function FormLogin() {
   );
 }
 
-function ButtonSuccess() {
-  const router = useRouter();
-  return (
-    <Button
-      className="mt-4 w-fit"
-      variant="bordered"
-      color="danger"
-      onPress={() => router.push("/")}
-    >
-      Back To Home
-    </Button>
-  );
-}
-
-export { ButtonSuccess, FormLogin };
+export { FormLogin };

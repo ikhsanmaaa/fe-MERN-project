@@ -1,7 +1,7 @@
 "use client";
+import ButtonSuccess from "@/ui/ButtonSuccess/ButtonSuccess";
 import { Metadata } from "next";
 import Image from "next/image";
-import { ButtonSuccess } from "@/app/auth/register/useRegister";
 
 export const metadata: Metadata = {
   title: "MERN | Activation",
@@ -41,7 +41,7 @@ export default function Activation(props: PropTypes) {
             ? "Thank you for register account"
             : "Confirmation account is invalid"}
         </p>
-        <ButtonSuccess />
+        <ButtonSuccess label="Back to Home" pathname="/" />
       </div>
     </div>
   );
