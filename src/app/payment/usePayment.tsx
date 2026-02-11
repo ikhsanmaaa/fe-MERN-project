@@ -29,10 +29,11 @@ const usePayment = () => {
   };
 
   const updateOrderStatus = async () => {
-    await OrderServices.updateStatusTransaction(
+    const res = await OrderServices.updateStatusTransaction(
       `${orderId}`,
       mapStatus(`${transactionStatus}`),
     );
+    return res;
   };
 
   const { mutate: mutateUpdateOrderStatus } = useMutation({
