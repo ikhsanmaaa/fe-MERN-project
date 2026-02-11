@@ -1,11 +1,13 @@
 "use client";
 
 import OrderServices from "@/services/order.services";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
 const usePayment = () => {
   const searchParams = useSearchParams();
+
+  const queryClient = useQueryClient();
 
   const orderId = searchParams.get("order_id");
 
@@ -44,6 +46,9 @@ const usePayment = () => {
 
   const { mutate: mutateUpdateOrderStatus } = useMutation({
     mutationFn: updateOrderStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+    },
   });
 
   return {
