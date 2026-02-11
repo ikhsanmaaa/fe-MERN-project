@@ -16,7 +16,11 @@ const Payment = () => {
     transactionStatus === "expire";
 
   useEffect(() => {
-    mutateUpdateOrderStatus;
+    if (!orderId || !transactionStatus) return;
+    mutateUpdateOrderStatus({
+      orderId,
+      transactionStatus,
+    });
   }, [orderId, transactionStatus]);
 
   return (

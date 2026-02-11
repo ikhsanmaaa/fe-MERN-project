@@ -28,10 +28,16 @@ const usePayment = () => {
     }
   };
 
-  const updateOrderStatus = async () => {
+  const updateOrderStatus = async ({
+    orderId,
+    transactionStatus,
+  }: {
+    orderId: string;
+    transactionStatus: string;
+  }) => {
     const res = await OrderServices.updateStatusTransaction(
-      `${orderId}`,
-      mapStatus(`${transactionStatus}`),
+      orderId,
+      mapStatus(transactionStatus),
     );
     return res;
   };
