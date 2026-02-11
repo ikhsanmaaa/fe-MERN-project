@@ -2,7 +2,6 @@
 
 import useChangeUrl from "@/hooks/useChangeUrl";
 import OrderServices from "@/services/order.services";
-import { GetParams } from "@/types/getParams";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 

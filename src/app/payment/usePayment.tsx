@@ -47,7 +47,7 @@ const usePayment = () => {
   const { mutate: mutateUpdateOrderStatus } = useMutation({
     mutationFn: updateOrderStatus,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["Order-history"] });
     },
   });
 

@@ -8,6 +8,7 @@ import { Key, ReactNode, useCallback, useEffect } from "react";
 import DropdownAction from "@/ui/DropdownAction/DropdownAction";
 import useTransaction from "./useTransaction";
 import { COLUMN_LIST_Transaction } from "./transactionConstant";
+import convertIDR from "@/utils/currency";
 
 const Transaction = () => {
   const router = useRouter();
@@ -30,10 +31,18 @@ const Transaction = () => {
       const cellValue = Transaction[columnKey as keyof typeof Transaction];
 
       switch (columnKey) {
-        case "Status":
+        case "total":
+          return convertIDR(Number(columnKey));
+        case "status":
           return (
             <Chip
-              color={cellValue ? "success" : "warning"}
+              color={
+                cellValue === "completed"
+                  ? "success"
+                  : cellValue === "pending" || "cancelled"
+                    ? "warning"
+                    : "danger"
+              }
               size="sm"
               variant="flat"
             >
