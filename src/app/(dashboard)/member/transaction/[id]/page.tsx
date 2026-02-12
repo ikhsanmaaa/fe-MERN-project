@@ -1,21 +1,21 @@
 import { Metadata } from "next";
 
 import PageHeader from "@/ui/PageHeader/PageHeader";
-import DetailBanner from "@/ui/AdminDashboardMenu/Banner/DetailBanner/DetailBanner";
+import DetailTransaction from "@/ui/MemberDahsboard/TransactionMember/DetailTransaction/DetailTransaction";
 export const metadata: Metadata = {
-  title: "Banner",
-  description: "Detail of Banner selected",
+  title: "Transaction",
+  description: "Detail of Transaction selected",
 };
-const AdminDetailBannerPage = () => {
+const AdminDetailTransactionPage = () => {
   return (
     <>
       <PageHeader
-        title="Detail Banner"
-        description="Manage information of detail Banner"
+        title="Detail Transaction"
+        description="Detail of Transaction"
       />
-      <DetailBanner />
+      <DetailTransaction />
     </>
   );
 };
 
-export default AdminDetailBannerPage;
+export default AdminDetailTransactionPage;

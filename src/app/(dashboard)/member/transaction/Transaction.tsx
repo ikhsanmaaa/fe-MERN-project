@@ -22,17 +22,13 @@ const Transaction = () => {
     setSelectedId,
   } = useTransaction();
 
-  useEffect(() => {
-    console.log(dataTransactions);
-  }, [dataTransactions]);
-
   const renderCell = useCallback(
     (Transaction: Record<string, unknown>, columnKey: Key) => {
       const cellValue = Transaction[columnKey as keyof typeof Transaction];
 
       switch (columnKey) {
         case "total":
-          return convertIDR(Number(columnKey));
+          return convertIDR(Number(cellValue));
         case "status":
           return (
             <Chip
