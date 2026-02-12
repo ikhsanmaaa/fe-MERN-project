@@ -50,7 +50,7 @@ const Transaction = () => {
             <DropdownAction
               labelButtonDetails="Details"
               onPressButtonDetail={() =>
-                router.push(`/member/transaction/${Transaction._id}`)
+                router.push(`/member/transaction/${Transaction.orderId}`)
               }
               hideButtonDelete
             />

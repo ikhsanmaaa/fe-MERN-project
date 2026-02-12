@@ -32,8 +32,8 @@ const useDetailTransaction = () => {
     enabled: !!dataOrder?.events,
   });
 
-  const getTicketByEventId = async () => {
-    const { data } = await ticketsServices.getTicketsByEventId(
+  const getTicketById = async () => {
+    const { data } = await ticketsServices.getTicketsById(
       `${dataOrder?.ticket}`,
     );
     return data.data;
@@ -41,7 +41,7 @@ const useDetailTransaction = () => {
 
   const { data: dataTickets } = useQuery({
     queryKey: ["TicketsById"],
-    queryFn: getTicketByEventId,
+    queryFn: getTicketById,
     enabled: !!dataOrder?.ticket,
   });
 
