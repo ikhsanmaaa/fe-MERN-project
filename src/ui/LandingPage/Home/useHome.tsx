@@ -26,7 +26,7 @@ const useHome = () => {
     queryFn: getBanner,
   });
 
-  const currentEventQuery = `limit=${LIMIT_EVENT}&page=${PAGE_DEFAULT}&isPublished=true`;
+  const currentEventQuery = `limit=${LIMIT_EVENT}&page=${PAGE_DEFAULT}&isPublish=true`;
 
   const getEventsHomePage = async (params: string) => {
     const res = await eventServices.getEvents(params);

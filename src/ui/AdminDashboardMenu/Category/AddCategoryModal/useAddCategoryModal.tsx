@@ -83,6 +83,7 @@ const useAddCategoryModal = () => {
       });
     },
     onSuccess: () => {
+      reset();
       addToast({
         title: "success",
         description: "Success add Category",
@@ -90,7 +91,6 @@ const useAddCategoryModal = () => {
         timeout: 3000,
         shouldShowTimeoutProgress: true,
       });
-      reset();
     },
   });
 

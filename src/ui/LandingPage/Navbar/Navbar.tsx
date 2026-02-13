@@ -3,6 +3,7 @@ import {
   Avatar,
   Button,
   ButtonProps,
+  Chip,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -141,21 +142,53 @@ const LandingPageNavbar = () => {
             <Dropdown>
               <DropdownTrigger>
                 <Avatar
-                  src={dataProfile?.profilPicture}
+                  src={dataProfile?.profilePicture}
                   className="cursor-pointer"
                   showFallback
                   name={dataProfile?.fullName}
                 />
               </DropdownTrigger>
               <DropdownMenu>
+                <DropdownItem key="role">
+                  <Chip
+                    avatar={
+                      <Avatar
+                        name={dataProfile?.username}
+                        src={dataProfile?.profilePicture}
+                      />
+                    }
+                    color={
+                      dataProfile?.role === "member" ? "warning" : "danger"
+                    }
+                    variant="flat"
+                  >
+                    {dataProfile?.role}
+                  </Chip>
+                </DropdownItem>
                 {isAdmin ? (
-                  <DropdownItem key="admin" href="/admin/dashboard">
-                    Admin Dashboard
-                  </DropdownItem>
+                  <>
+                    <DropdownItem key="event" href="/admin/event">
+                      Event
+                    </DropdownItem>
+                    <DropdownItem key="category" href="/admin/category">
+                      Category
+                    </DropdownItem>
+                    <DropdownItem key="banner" href="/admin/banner">
+                      Banner
+                    </DropdownItem>
+                    <DropdownItem key="transaction" href="/admin/transaction">
+                      Transaction
+                    </DropdownItem>
+                  </>
                 ) : (
-                  <DropdownItem key="profile" href="member/profile">
-                    Profile
-                  </DropdownItem>
+                  <>
+                    <DropdownItem key="member" href="member/transaction">
+                      Transaction
+                    </DropdownItem>
+                    <DropdownItem key="profile" href="member/profile">
+                      Profile
+                    </DropdownItem>
+                  </>
                 )}
 
                 <DropdownItem key="signout" onPress={() => signOut()}>

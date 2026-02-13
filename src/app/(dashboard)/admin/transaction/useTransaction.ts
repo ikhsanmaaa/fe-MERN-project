@@ -10,10 +10,10 @@ const useTransaction = () => {
 
   const { currentPage, currentLimit, currentSearch } = useChangeUrl();
 
-  const getOrderHistory = async () => {
+  const getAdminTransaction = async () => {
     let params = `limit=${currentLimit}&page=${currentPage}&search=${currentSearch}`;
 
-    const res = await OrderServices.getMemberOrder(params);
+    const res = await OrderServices.getOrders(params);
     const { data } = res;
 
     return data;
@@ -25,8 +25,8 @@ const useTransaction = () => {
     isRefetching: isRefetchingTransactions,
     refetch: refetchTransactions,
   } = useQuery({
-    queryKey: ["Order-history", currentLimit, currentPage, currentSearch],
-    queryFn: getOrderHistory,
+    queryKey: ["AdminTransaction", currentLimit, currentPage, currentSearch],
+    queryFn: getAdminTransaction,
   });
 
   return {

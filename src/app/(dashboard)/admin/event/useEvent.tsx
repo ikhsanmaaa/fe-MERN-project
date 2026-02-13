@@ -9,14 +9,17 @@ import { useState } from "react";
 const useEvent = () => {
   const [selectedId, setSelectedId] = useState<string>("");
 
-  const { currentPage, currentLimit, currentSearch } = useChangeUrl();
+  const {
+    currentPage,
+    currentLimit,
+    currentSearch,
+    currentCategory,
+    currentIsFeatured,
+    currentIsOnline,
+  } = useChangeUrl();
 
-  const getEvent = async ({ page, limit, search }: GetParams) => {
-    let params = `limit=${limit}&page=${page}`;
-
-    if (search) {
-      params += `&search=${search}`;
-    }
+  const getEvent = async () => {
+    let params = `limit=${currentLimit}&page=${currentPage}&isPublish=true&category=${currentCategory}&isFeatured=${currentIsFeatured}&isOnline=${currentIsOnline}`;
 
     const res = await eventServices.getEvents(params);
     const { data } = res;
@@ -30,13 +33,16 @@ const useEvent = () => {
     isRefetching: isRefetchingEvent,
     refetch: refetchEvent,
   } = useQuery({
-    queryKey: ["Event", currentPage, currentLimit, currentSearch],
-    queryFn: () =>
-      getEvent({
-        page: currentPage,
-        limit: currentLimit,
-        search: currentSearch,
-      }),
+    queryKey: [
+      "Event",
+      currentPage,
+      currentLimit,
+      currentSearch,
+      currentCategory,
+      currentIsFeatured,
+      currentIsOnline,
+    ],
+    queryFn: getEvent,
   });
 
   return {

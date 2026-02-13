@@ -42,7 +42,36 @@ interface ILogin {
   password: string;
 }
 
+interface IProfilePayload {
+  _id?: string;
+  email: string;
+  fullName: string;
+  isActive: boolean;
+  profilePicture: string | FileList;
+  role: string;
+  username: string;
+}
+
+interface IProfileForm {
+  _id?: string;
+  email?: string;
+  fullName?: string;
+  isActive?: boolean;
+  profilePicture?: string | FileList;
+  role?: string;
+  username?: string;
+}
+
+interface IProfilePassword {
+  oldPassword: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export type {
+  IProfilePassword,
+  IProfileForm,
+  IProfilePayload,
   IRegister,
   IActivation,
   UserExtended,

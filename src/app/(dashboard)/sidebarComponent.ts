@@ -1,40 +1,27 @@
 import {
   CiBookmark,
-  CiGrid41,
-  CiSettings,
   CiShoppingTag,
+  CiUser,
   CiViewList,
   CiWallet,
 } from "react-icons/ci";
 
 export const memberItems = [
   {
-    key: "dashboard",
-    label: "Dashboard",
-    href: "/member/dashboard",
-    icon: CiGrid41,
-  },
-  {
-    key: "setting",
-    label: "Setting",
-    href: "/member/setting",
-    icon: CiSettings,
-  },
-  {
     key: "transaction",
     label: "Transaction",
     href: "/member/transaction",
     icon: CiWallet,
   },
+  {
+    key: "profile",
+    label: "Profile",
+    href: "/member/profile",
+    icon: CiUser,
+  },
 ];
 
 export const adminItems = [
-  {
-    key: "dashboard",
-    label: "Dashboard",
-    href: "/admin/dashboard",
-    icon: CiGrid41,
-  },
   {
     key: "event",
     label: "Event",

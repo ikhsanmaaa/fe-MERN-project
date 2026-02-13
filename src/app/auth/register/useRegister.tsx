@@ -20,6 +20,8 @@ const registerSchema = yup.object().shape({
   password: yup
     .string()
     .min(8, "minimal 8 character")
+    .matches(/[A-Z]/, "required 1 uppercase letter")
+    .matches(/[0-9]/, "required 1 number")
     .required("Please input your password"),
   confirmPassword: yup
     .string()
@@ -39,6 +41,16 @@ function FormRegister() {
       [key]: !visiblePassword[key],
     });
   };
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setError,
+  } = useForm({
+    resolver: yupResolver(registerSchema),
+  });
 
   const registerService = async (payload: IRegister) => {
     try {
@@ -69,7 +81,13 @@ function FormRegister() {
       });
     },
     onSuccess: () => {
-      reset();
+      reset({
+        fullName: "",
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
       addToast({
         title: "success create an account!",
         color: "success",
@@ -82,16 +100,6 @@ function FormRegister() {
   const handleRegister = (data: IRegister) => {
     mutateRegister(data);
   };
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setError,
-  } = useForm({
-    resolver: yupResolver(registerSchema),
-  });
 
   return (
     <form

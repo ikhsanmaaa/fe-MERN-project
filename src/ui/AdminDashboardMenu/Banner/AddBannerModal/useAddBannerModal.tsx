@@ -86,6 +86,7 @@ const useAddBannerModal = () => {
       });
     },
     onSuccess: () => {
+      reset();
       addToast({
         title: "success",
         description: "Success add Banner",
@@ -93,7 +94,6 @@ const useAddBannerModal = () => {
         timeout: 3000,
         shouldShowTimeoutProgress: true,
       });
-      reset();
     },
   });
 

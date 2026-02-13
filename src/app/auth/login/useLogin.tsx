@@ -57,7 +57,10 @@ function FormLogin() {
       });
     },
     onSuccess: () => {
-      reset();
+      reset({
+        identifier: "",
+        password: "",
+      });
       addToast({
         title: "Login success!",
         color: "success",
