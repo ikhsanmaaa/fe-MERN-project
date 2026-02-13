@@ -5,10 +5,11 @@ import useChangeUrl from "@/hooks/useChangeUrl";
 import authServices from "@/services/auth.services";
 import eventServices from "@/services/events.services";
 import { useQuery } from "@tanstack/react-query";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 const useLandingPageLayoutNavbar = () => {
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
   const { timeoutRef, updateQuery } = useChangeUrl();
 
@@ -22,22 +23,33 @@ const useLandingPageLayoutNavbar = () => {
     queryFn: getProfile,
   });
 
-  const getEventsSearch = async () => {
-    const params = `search=${search}&limit=${LIMIT_EVENT}&page=${PAGE_DEFAULT}&isPublish=true`;
+  const getEventsSearch = async (searchValue: string) => {
+    const params = `search=${searchValue}&limit=${LIMIT_EVENT}&page=${PAGE_DEFAULT}&isPublish=true`;
 
     const res = await eventServices.getEvents(params);
 
     return res.data.data;
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const {
     data: dataEventSearch,
     isLoading: isLoadingEventSearch,
     isRefetching: isRefetchingEventSearch,
   } = useQuery({
-    queryKey: ["EventSearch", search],
-    queryFn: getEventsSearch,
-    enabled: search.trim().length > 0,
+    queryKey: ["EventSearch", debouncedSearch],
+    queryFn: ({ queryKey }) => {
+      const [, searchValue] = queryKey;
+      return getEventsSearch(searchValue);
+    },
+    enabled: debouncedSearch.trim().length > 0,
   });
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
