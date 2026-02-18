@@ -1,17 +1,17 @@
-# 🎟️ Concert Ticketing & Management System (MERN Stack)
+# Concert Ticketing & Management System (MERN Stack)
 
 A full-stack web application for concert ticket purchasing and admin event management.  
 Built with modern JavaScript technologies and integrated with Midtrans Payment Gateway (Sandbox).
 
-🌐 **Live Frontend Demo**  
+ **Live Frontend Demo**  
 https://fe-mern-project.vercel.app/
 
-📘 **API Documentation (Swagger)**  
+ **API Documentation (Swagger)**  
 https://mern-project-gamma-jet.vercel.app/api-docs/
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
 This project is a MERN-based ticketing platform that simulates a real-world concert ticket purchasing workflow.
 
@@ -27,7 +27,7 @@ This project demonstrates production-style architecture, payment handling, and R
 
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - React 19
@@ -53,27 +53,27 @@ This project demonstrates production-style architecture, payment handling, and R
 
 ---
 
-## ✨ Core Features
+## Core Features
 
-### 👤 Authentication & Authorization
+### Authentication & Authorization
 - Secure login system
 - JWT-based authentication
 - Protected routes
 - Input validation with Yup
 
-### 🎫 Ticket Purchasing System
+### Ticket Purchasing System
 - Browse available events
 - Ticket selection
 - Checkout process
 - Real-time transaction handling
 
-### 💳 Payment Gateway Integration
+### Payment Gateway Integration
 - Midtrans Snap integration (Sandbox)
 - Transaction token generation
 - Payment status validation
 - Secure backend verification
 
-### 🛠️ Admin Management
+### Admin Management
 - Create & manage events
 - Monitor transactions
 - Track ticket purchases
@@ -81,7 +81,7 @@ This project demonstrates production-style architecture, payment handling, and R
 
 ---
 
-## 🧠 Technical Highlights
+## Technical Highlights
 
 - Clean separation between frontend & backend
 - Modular backend structure (controllers, routes, middleware, models)
@@ -94,6 +94,24 @@ This project demonstrates production-style architecture, payment handling, and R
 - Reusable UI components
 
 ---
+## User Info Demo
+Member
+username: member
+password: Member123
 
-## 📂 Architecture Overview
+Admin
+username: temon
+password: Temon123
+
+or you can register at the web
+
+## Architecture Overview
+<img width="1365" height="603" alt="image" src="https://github.com/user-attachments/assets/f2554ff2-c398-4d4f-8500-8c2219fcee28" />
+<img width="1365" height="599" alt="image" src="https://github.com/user-attachments/assets/41d72d6b-9048-4f99-a647-42b29f67e3c9" />
+<img width="1365" height="600" alt="image" src="https://github.com/user-attachments/assets/f58b0997-8e01-40e8-af7f-470c94135b97" />
+<img width="1365" height="600" alt="image" src="https://github.com/user-attachments/assets/5ba7a076-62bf-47cb-af15-0374f4fb1eee" />
+<img width="1365" height="601" alt="image" src="https://github.com/user-attachments/assets/8d64a6d8-9930-4e70-b2a5-4ef1d32873d3" />
+
+
+
 
