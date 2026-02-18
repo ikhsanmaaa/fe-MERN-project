@@ -1,7 +1,7 @@
 # Concert Ticketing & Management System (MERN Stack)
 
 A full-stack web application for concert ticket purchasing and admin event management.  
-Built with modern JavaScript technologies and integrated with Midtrans Payment Gateway (Sandbox).
+Built with modern TypeScript technologies and integrated with Midtrans Payment Gateway (Sandbox).
 
  **Live Frontend Demo**  
 https://fe-mern-project.vercel.app/
