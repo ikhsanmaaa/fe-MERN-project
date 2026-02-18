@@ -31,6 +31,7 @@ import useLandingPageLayoutNavbar from "../useLandingPageLayoutNavbar";
 import { Fragment } from "react";
 import useChangeUrl from "@/hooks/useChangeUrl";
 import { IEvent } from "@/types/Event";
+import { FaChevronDown } from "react-icons/fa";
 
 const LandingPageNavbar = () => {
   const pathname = usePathname();
@@ -83,6 +84,53 @@ const LandingPageNavbar = () => {
               {item.label}
             </NavbarItem>
           ))}
+
+          <NavbarItem className="lg:block">
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  disableRipple
+                  endContent={
+                    <FaChevronDown
+                      size={16}
+                      className="ml-1 transition-transform group-data-[open=true]:rotate-180"
+                    />
+                  }
+                  className={cn(
+                    "font-medium hover:text-danger px-0 min-w-0 bg-transparent",
+                    pathname.startsWith("/about")
+                      ? "font-bold text-danger-500"
+                      : "text-default-700",
+                  )}
+                  radius="none"
+                  variant="light"
+                >
+                  About
+                </Button>
+              </DropdownTrigger>
+
+              <DropdownMenu
+                aria-label="About menu"
+                itemClasses={{
+                  base: "data-[hover=true]:text-danger",
+                }}
+              >
+                <DropdownItem key="tech" as={Link} href="/about/tech">
+                  Tech-used
+                </DropdownItem>
+                <DropdownItem
+                  key="Swagger Docs"
+                  as={Link}
+                  href="https://mern-project-gamma-jet.vercel.app/api-docs/"
+                >
+                  Swagger Docs
+                </DropdownItem>
+                <DropdownItem key="creator" as={Link} href="/about/creator">
+                  Creator
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </NavbarItem>
         </NavbarContent>
       </div>
       <NavbarContent justify="end">

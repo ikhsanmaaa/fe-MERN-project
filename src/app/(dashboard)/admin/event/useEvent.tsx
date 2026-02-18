@@ -2,7 +2,6 @@
 
 import useChangeUrl from "@/hooks/useChangeUrl";
 import eventServices from "@/services/events.services";
-import { GetParams } from "@/types/getParams";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -19,7 +18,17 @@ const useEvent = () => {
   } = useChangeUrl();
 
   const getEvent = async () => {
-    let params = `limit=${currentLimit}&page=${currentPage}&isPublish=true&category=${currentCategory}&isFeatured=${currentIsFeatured}&isOnline=${currentIsOnline}`;
+    let params = `limit=${currentLimit}&page=${currentPage}&isPublish=true`;
+
+    if (currentIsFeatured !== null) {
+      params += `&isFeatured=${currentIsFeatured}`;
+    }
+    if (currentIsOnline !== null) {
+      params += `&isOnline=${currentIsOnline}`;
+    }
+    if (currentCategory !== null) {
+      params += `&category=${currentCategory}`;
+    }
 
     const res = await eventServices.getEvents(params);
     const { data } = res;

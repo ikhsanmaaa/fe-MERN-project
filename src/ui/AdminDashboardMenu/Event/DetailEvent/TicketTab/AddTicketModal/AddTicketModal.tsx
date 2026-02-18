@@ -34,13 +34,24 @@ const AddTicketModal = (props: PropTypes) => {
 
   useEffect(() => {
     if (isSuccessMutateAddTickets) {
+      reset({
+        name: "",
+        price: "",
+        description: "",
+        quantity: "",
+      });
       onClose();
       refetchTickets();
     }
   }, [isSuccessMutateAddTickets]);
 
   const handleOnClose = () => {
-    reset();
+    reset({
+      name: "",
+      price: "",
+      description: "",
+      quantity: "",
+    });
     onClose();
   };
 
