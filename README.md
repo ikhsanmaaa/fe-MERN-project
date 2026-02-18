@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎟️ Concert Ticketing & Management System (MERN Stack)
 
-## Getting Started
+A full-stack web application for concert ticket purchasing and admin event management.  
+Built with modern JavaScript technologies and integrated with Midtrans Payment Gateway (Sandbox).
 
-First, run the development server:
+🌐 **Live Frontend Demo**  
+https://fe-mern-project.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+📘 **API Documentation (Swagger)**  
+https://mern-project-gamma-jet.vercel.app/api-docs/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📌 Project Overview
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is a MERN-based ticketing platform that simulates a real-world concert ticket purchasing workflow.
 
-## Learn More
+The system includes:
 
-To learn more about Next.js, take a look at the following resources:
+- Secure authentication
+- Ticket booking system
+- Checkout process
+- Payment gateway integration (Midtrans Sandbox)
+- Admin dashboard for event & transaction management
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project demonstrates production-style architecture, payment handling, and REST API implementation.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🏗️ Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Frontend
+- React 19
+- Next.js 15 (App Router)
+- Tailwind CSS
+- Hero UI
+- TanStack React Query
+- Axios
+- React Hook Form
+- Yup (Form Validation)
+- NextAuth (Authentication)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- Swagger (API Documentation)
+- Nodemailer (Email Service)
+- Midtrans Snap (Sandbox)
+- Cloudinary (Cloud Storage)
+
+---
+
+## ✨ Core Features
+
+### 👤 Authentication & Authorization
+- Secure login system
+- JWT-based authentication
+- Protected routes
+- Input validation with Yup
+
+### 🎫 Ticket Purchasing System
+- Browse available events
+- Ticket selection
+- Checkout process
+- Real-time transaction handling
+
+### 💳 Payment Gateway Integration
+- Midtrans Snap integration (Sandbox)
+- Transaction token generation
+- Payment status validation
+- Secure backend verification
+
+### 🛠️ Admin Management
+- Create & manage events
+- Monitor transactions
+- Track ticket purchases
+- Manage system data
+
+---
+
+## 🧠 Technical Highlights
+
+- Clean separation between frontend & backend
+- Modular backend structure (controllers, routes, middleware, models)
+- RESTful API design
+- API documentation using Swagger
+- Environment-based configuration
+- Secure payment flow validation
+- State management using React Query
+- Form validation & error handling
+- Reusable UI components
+
+---
+
+## 📂 Architecture Overview
+
