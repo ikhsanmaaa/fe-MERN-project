@@ -38,4 +38,5 @@ export interface ICart {
   events: string;
   ticket: string;
   quantity: number;
+  origin?: string;
 }

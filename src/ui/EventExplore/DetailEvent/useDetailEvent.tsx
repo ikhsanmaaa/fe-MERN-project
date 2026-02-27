@@ -78,7 +78,10 @@ const useDetailEvent = () => {
   };
 
   const createOrder = async (payload: ICart) => {
-    const result = await OrderServices.createOrder(payload);
+    const result = await OrderServices.createOrder({
+      ...payload,
+      origin: window.location.origin,
+    });
     const { data } = result;
     return data.data;
   };
